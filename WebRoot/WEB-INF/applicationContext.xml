@@ -17,6 +17,9 @@
   http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
 
 	<context:property-placeholder location="classpath:mysql.properties" />
+	
+	<bean id="ExceptionInterceptor" class="cn.ac.big.dp.interceptor.ExceptionInterceptor"></bean> 
+	
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="${jdbc.driverClassName}" />
 		<property name="url" value="${jdbc.url}" />
@@ -122,6 +125,7 @@
 		<property name="diagnoseService" ref="diagnoseService" />
 		<property name="itemService" ref="itemService"/>
 		<property name="subItemInfoService" ref="subItemInfoService"/>
+		<property name="dictService" ref="dictService" />
 	</bean>
 	<bean id="userAction" class="cn.ac.big.dp.action.UserAction" scope="prototype">
 		<property name="userService" ref="userService"/>

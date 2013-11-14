@@ -8,7 +8,7 @@ public interface IUserDao
 {
 	public List<User> getAllUser();
 	public User getUser(int userId);
-	public boolean addUser(User user);
-	public boolean deleteUserByUserId(int userId);
-	public boolean updateUser(User user);
+	public void addUser(User user);
+	public void deleteUserByUserId(int userId);
+	public void updateUser(User user);
 }

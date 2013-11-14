@@ -217,12 +217,12 @@ public class ChartUtils {
 		
 		return chartJson;
 	}
-	public static LineChartJson produceHeightLineChart(List<ChartKV> valueList, String[] reference){
+	public static LineChartJson produceHeightLineChart(String itemName, String unit, List<ChartKV> valueList, String[] reference){
 		
 		/*
 		 * category
 		 */
-		LineChart chart = new LineChart("检验指标(白细胞计数)", "(单位(10^9/L))", "1", "0", "0", "2", "20", "CC3300", "1", "1", "CC3300", "40", "2", "5", "35", "FFFFFF,CC3300", "330", "10,10", "5", "RIGHT");
+		LineChart chart = new LineChart("项目指标("+ itemName +")", "".equals(unit)?"":"单位("+unit+")", "1", "0", "0", "2", "20", "CC3300", "1", "1", "CC3300", "40", "2", "5", "35", "FFFFFF,CC3300", "330", "10,10", "5", "RIGHT");
 		List<Category> categoryList = new ArrayList<Category>();
 		
 		for(int i = 0; i<valueList.size();i++)

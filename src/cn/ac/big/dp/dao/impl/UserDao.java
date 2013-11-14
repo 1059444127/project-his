@@ -20,40 +20,16 @@ public class UserDao implements IUserDao{
 	{
 		return getSqlSessionTemplate().selectList("selectAllUser");
 	}
-	
-	public boolean addUser(User user)
+	public void addUser(User user)
 	{
-		try
-		{
-			getSqlSessionTemplate().insert("insertUser",user);
-			return true;
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-			return false;
-		}
+		getSqlSessionTemplate().insert("insertUser",user);
 	}
-	public boolean deleteUserByUserId(int userId)
+	public void deleteUserByUserId(int userId)
 	{
-		try{
-			getSqlSessionTemplate().delete("deleteUser",userId);
-			return true;
-		}
-		catch(Exception e){
-			e.printStackTrace();
-			return false;
-		}
+		getSqlSessionTemplate().delete("deleteUser",userId);
 	}
-	public boolean updateUser(User user) {
-		try{
-			getSqlSessionTemplate().update("updateUser",user);
-			return true;
-		}
-		catch(Exception e){
-			e.printStackTrace();
-			return false;
-		}
+	public void updateUser(User user) {
+		getSqlSessionTemplate().update("updateUser",user);
 	}
 	public User getUser(int userId) {
 		return (User) getSqlSessionTemplate().selectOne("selectUser", userId);

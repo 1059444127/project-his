@@ -10,7 +10,7 @@ public interface IDictService {
 
 	public List<Dict> getDictByParam(String paramName, int value);
 	public List<Dict> getAllDict(String status);
-	public List<Dict> getAllDictByParam(String paramName, int paramValue);
+	public List<Dict> getAllDictByParam(String paramName, Object paramValue);
 	public List<String> getDictNameByParentDictId(int dictId); 
 	public List<Dict> getDisplayRootDictByParams(String type);
 	public List<Dict> getDictByParams(List<SQLCondition> condtion);

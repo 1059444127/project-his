@@ -8,7 +8,9 @@ import org.apache.struts2.ServletActionContext;
 
 import cn.ac.big.dp.bean.DiagCountDTO;
 import cn.ac.big.dp.bean.DiagItemDTO;
+import cn.ac.big.dp.bean.Dict;
 import cn.ac.big.dp.service.IDiagnoseService;
+import cn.ac.big.dp.service.IDictService;
 import cn.ac.big.dp.service.IItemService;
 import cn.ac.big.dp.service.ISubItemInfoService;
 import cn.ac.big.dp.test.DiagMap;
@@ -39,6 +41,7 @@ public class ChartAction extends ActionSupport {
 	
 	private IDiagnoseService diagnoseService;
 	private ISubItemInfoService subItemInfoService;
+	private IDictService dictService;
 	private IItemService itemService;
 	
 	/*
@@ -67,7 +70,12 @@ public class ChartAction extends ActionSupport {
 	public String findSameItemChart(){
 		List<ChartKV> chartValueList = subItemInfoService.selectSameItemValue(patientId, visitId, itemName);
 		String[] references = itemService.selectReferenceValue(itemName);
-		tips = ChartUtils.produceHeightLineChart(chartValueList, references);
+		List<Dict> dictList = dictService.getAllDictByParam("dict_name", itemName);
+		String unit = "";
+		if(dictList!=null && dictList.size()>0) {
+			unit = dictList.get(0).getUnit();
+		}
+		tips = ChartUtils.produceHeightLineChart(itemName, unit, chartValueList, references);
 		return SUCCESS;
 	}
 	public String findDiagChart() {
@@ -215,6 +223,10 @@ public class ChartAction extends ActionSupport {
 
 	public void setHasDiag(int hasDiag) {
 		this.hasDiag = hasDiag;
+	}
+
+	public void setDictService(IDictService dictService) {
+		this.dictService = dictService;
 	}
 
 }

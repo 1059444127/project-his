@@ -20,6 +20,7 @@ public class ItemDao implements IItemDao{
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		this.sessionTemplate = sqlSessionTemplate;
 	}
+	
 	public List<Item> selectLabItemByParams(List<SQLCondition> condList){
 		List<Item> labItemList = new ArrayList<Item>();
 		Map<String, Object> paramMap = new HashMap<String, Object>();

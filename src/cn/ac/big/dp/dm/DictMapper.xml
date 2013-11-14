@@ -51,8 +51,8 @@
 	</select>
 	
 	<select id="selectAllDictByParam" resultMap="SimpleDictMap" parameterType="hashMap">
-		select dict_id, p_dict_name, dict_name, display_flag
-		from v_dict_info
+		select dict_id, unit, p_dict_name, dict_name, display_flag
+		from tb_dict
 		where ${paramName} = #{paramValue}
 	</select>
 	
@@ -122,6 +122,7 @@
 	
 	<resultMap type="Dict" id="SimpleDictMap">
 		<id column="dict_id" property="dictId" />
+		<result column="unit" property="unit" />
 		<result column="dict_name" property="dictName" />
 		<result column="p_dict_name" property="pDictName" />
 		<result column="display_flag" property="displayFlag"/>

@@ -62,16 +62,8 @@ public class UserAction extends ActionSupport
 	}
 	public String addUser()
 	{
-		boolean addFlag = this.userService.addUser(user);
-		
-		if(addFlag)
-		{
-			return this.getAllUsers();
-		}
-		else
-		{
-			return ERROR;
-		}
+		this.userService.addUser(user);
+		return SUCCESS;
 	}
 	public String deleteUser()
 	{

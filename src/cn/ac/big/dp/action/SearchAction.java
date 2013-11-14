@@ -152,7 +152,8 @@ public class SearchAction extends ActionSupport {
 	}
 
 	@SuppressWarnings("unchecked")
-	public String queryTestInfo() {
+	public String queryTestInfo() throws Exception {
+		
 		HttpSession session = ServletActionContext.getRequest().getSession();
 		String requestPath = "http://"
 				+ ServletActionContext.getRequest().getServerName() + ":"
@@ -190,7 +191,7 @@ public class SearchAction extends ActionSupport {
 		page.setLinkHref(requestPath);
 		testResultList = testSearchService.searchTestResultByCondition(patVisitList, condList, simpleSearch);
 		session.setAttribute("testResultList", testResultList);
-		return SUCCESS;
+		throw new Exception();
 	}
 
 	public String deleteCondition() {

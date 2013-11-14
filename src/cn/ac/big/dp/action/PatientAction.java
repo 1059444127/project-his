@@ -277,42 +277,22 @@ public class PatientAction extends ActionSupport{
 	 */
 	
 	public String addPatientInfo() {
-		try{
-			this.patientService.savePatientInfo(patient, visit, item, iteme, diag, drug);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return ERROR;
-		}
+		this.patientService.savePatientInfo(patient, visit, item, iteme, diag, drug);
 		return SUCCESS;
 	}
 	
 	public String addPatientBasicInfo() {
-		try{
-			this.patientService.savePatientBasicInfo(patient);
-		} catch(Exception e) {
-			e.printStackTrace();
-			return ERROR;
-		}
+		this.patientService.savePatientBasicInfo(patient);
 		return SUCCESS;
 	}
 	
 	public String addPatientVisitInfo() {
-		try{
-			this.patientService.savePatientVisitInfo(patient, visit);
-		} catch(Exception e) {
-			e.printStackTrace();
-			return ERROR;
-		}
+		this.patientService.savePatientVisitInfo(patient, visit);
 		return SUCCESS;
 	}
 	
 	public String addPatientTEDInfo() {
-		try{
-			this.patientService.savePatientTED(patient, visit, item, iteme, diag, drug);
-		} catch(Exception e) {
-			e.printStackTrace();
-			return ERROR;
-		}
+		this.patientService.savePatientTED(patient, visit, item, iteme, diag, drug);
 		return SUCCESS;
 	}
 	
@@ -321,12 +301,7 @@ public class PatientAction extends ActionSupport{
 	 * @return
 	 */
 	public String deletePatientAllInfo() {
-		try{
-			this.patientService.deletePatient(patientId, visitId);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return ERROR;
-		}
+		this.patientService.deletePatient(patientId, visitId);
 		return SUCCESS;
 	}
 	

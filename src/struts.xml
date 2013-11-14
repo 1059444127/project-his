@@ -5,107 +5,127 @@
 
 <struts>
 
-    <constant name="struts.enable.DynamicMethodInvocation" value="false" />
-    <constant name="struts.devMode" value="false" />
-    <package name="admin" namespace="/admin" extends="struts-default">
-    	<global-results>
-    		<result name="error">/pages/other/error.jsp</result>
-    	</global-results>
+	<constant name="struts.enable.DynamicMethodInvocation" value="false" />
+	<constant name="struts.devMode" value="false" />
+
+
+	<package name="exceptionPkg" extends="struts-default">
+		<interceptors>
+			<interceptor name="exceptionInterceptor" class="ExceptionInterceptor" />
+			<interceptor-stack name="myStack">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="exceptionInterceptor" />
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="myStack" />
+		<global-results>
+			<result name="error">/pages/other/error.jsp</result>
+		</global-results>
+		<global-exception-mappings>
+			<exception-mapping result="error" exception="java.lang.Exception"></exception-mapping>
+		</global-exception-mappings>
+	</package>
+	
+	<package name="admin" namespace="/admin" extends="exceptionPkg">
 		<action name="userAction_*" class="userAction" method="{1}">
 			<result name="success">/pages/admin/doctor.jsp</result>
 		</action>
 		<action name="codeAction_*" class="searchAction" method="{1}">
 			<result name="success">/pages/admin/code.jsp</result>
 		</action>
-    </package>
-    <package name="diag" namespace="/diag" extends="struts-default">
-    	<action name="diag_*" class="diagnoseAction" method="{1}">
-    		<result name="success">/pages/admin/chart.jsp</result>
-    		<result name="success_m">/pages/admin/chart_of_my.jsp</result>
-    	</action>
-    </package>
-    <package name="ajax" namespace="/ajax" extends="json-default">
-    	<action name="bio_*" class="bioAction" method="{1}">
-    		<result type="json"/>
-    	</action>
-    	<action name="ajax_*" class="searchAction" method="{1}">
-    		<result type="json"/>
-    	</action>
-    	<action name="item_*" class="itemAction" method="{1}">
-    		<result type="json"/>
-    	</action>
-    	<action name="chart_findDiagItemPager" class="chartAction" method="findDiagItemPager">
-    		<result type="json"/>
-    	</action>
-    	<action name="chart_*" class="chartAction" method="{1}">
-    		<result type="json">
-    			<param name="root">tips</param>
-    		</result>
-    	</action>
-    	<action name="report_*" class="reportAction" method="{1}">
-    		<result type="json">
-    		</result>
-    	</action>
-    </package>
-    
-    <package name="search" namespace="/search" extends="struts-default">
-    	<global-results>
-    		<result name="error">/pages/other/error.jsp</result>
-    	</global-results>
-    	<action name="search_*" class="searchAction" method="{1}">
-    		<result name="success">/pages/basicInfo/basicInfo.jsp</result>
-    		<result name="del_success" type="redirect">/pages/search/search.jsp</result>
-    	</action>
-    	<action name="patient_s_*" class="patientAction" method="{1}">
-    		<result name="success" type="redirectAction">
-    			<param name="actionName">patient_findPatient</param>
-    			<param name="patientId">${patient.patientId}</param>
-    			<param name="isFirstSerachFlag">1</param>
-    		</result>
-    	</action>
-    	<action name="patient_findPatientPagerV" class="patientAction" method="findPatientPager">
-    		<result name="success">/pages/admin/patient_view.jsp</result>
-    	</action>
-    	<action name="patient_findPatientPager" class="patientAction" method="findPatientPager">
-    		<result name="success">/pages/admin/patient.jsp</result>
-    	</action>
-    	<action name="patient_findVisitPager" class="patientAction" method="findVisitPager">
-    		<result name="success">/pages/admin/visit.jsp</result>
-    	</action>
-    	<action name="patient_findDiagItemPager" class="patientAction" method="findDiagItemPager">
-    		<result name="success">/pages/admin/diag.jsp</result>
-    	</action>
-    	<action name="patient_deletePatientAllInfo" class="patientAction" method="deletePatientAllInfo">
-    		<result type="redirectAction">
-    			<param name="actionName">patient_findPatientPager</param>
-    		</result>
-    	</action>
-    	<action name="patient_*" class="patientAction" method="{1}">
-    		<result name="success">/pages/detailInfo/patient.jsp</result>
-    	</action>
-    </package>
-    
-    <package name="export" namespace="/export" extends="struts-default">
-    	<action name="export_*" class="exportFileAction" method="{1}">
+	</package>
+	<package name="diag" namespace="/diag" extends="exceptionPkg">
+		<action name="diag_*" class="diagnoseAction" method="{1}">
+			<result name="success">/pages/admin/chart.jsp</result>
+			<result name="success_m">/pages/admin/chart_of_my.jsp</result>
+		</action>
+	</package>
+	<package name="ajax" namespace="/ajax" extends="json-default">
+		<action name="bio_*" class="bioAction" method="{1}">
+			<result type="json" />
+		</action>
+		<action name="ajax_*" class="searchAction" method="{1}">
+			<result type="json" />
+		</action>
+		<action name="item_*" class="itemAction" method="{1}">
+			<result type="json" />
+		</action>
+		<action name="chart_findDiagItemPager" class="chartAction"
+			method="findDiagItemPager">
+			<result type="json" />
+		</action>
+		<action name="chart_*" class="chartAction" method="{1}">
+			<result type="json">
+				<param name="root">tips</param>
+			</result>
+		</action>
+		<action name="report_*" class="reportAction" method="{1}">
+			<result type="json">
+			</result>
+		</action>
+	</package>
+
+	<package name="search" namespace="/search" extends="exceptionPkg">
+		<action name="search_*" class="searchAction" method="{1}">
+			<result name="success">/pages/basicInfo/basicInfo.jsp</result>
+			<result name="del_success" type="redirect">/pages/search/search.jsp
+			</result>
+		</action>
+		<action name="patient_s_*" class="patientAction" method="{1}">
+			<result name="success" type="redirectAction">
+				<param name="actionName">patient_findPatient</param>
+				<param name="patientId">${patient.patientId}</param>
+				<param name="isFirstSerachFlag">1</param>
+			</result>
+		</action>
+		<action name="patient_findPatientPagerV" class="patientAction"
+			method="findPatientPager">
+			<result name="success">/pages/admin/patient_view.jsp</result>
+		</action>
+		<action name="patient_findPatientPager" class="patientAction"
+			method="findPatientPager">
+			<result name="success">/pages/admin/patient.jsp</result>
+		</action>
+		<action name="patient_findVisitPager" class="patientAction"
+			method="findVisitPager">
+			<result name="success">/pages/admin/visit.jsp</result>
+		</action>
+		<action name="patient_findDiagItemPager" class="patientAction"
+			method="findDiagItemPager">
+			<result name="success">/pages/admin/diag.jsp</result>
+		</action>
+		<action name="patient_deletePatientAllInfo" class="patientAction"
+			method="deletePatientAllInfo">
+			<result type="redirectAction">
+				<param name="actionName">patient_findPatientPager</param>
+			</result>
+		</action>
+		<action name="patient_*" class="patientAction" method="{1}">
+			<result name="success">/pages/detailInfo/patient.jsp</result>
+		</action>
+	</package>
+
+	<package name="export" namespace="/export" extends="struts-default">
+		<action name="export_*" class="exportFileAction" method="{1}">
 			<result name="success" type="stream">
 				<param name="contentType">application/octet-stream</param>
 				<param name="inputName">inputStream</param>
 				<param name="contentDisposition">attachment;filename="${fileName}"</param>
 				<param name="bufferSize">4096</param>
 			</result>
-    	</action>
-    </package>
-    
-    <package name="template" namespace="/template" extends="struts-default">
-    	<action name="template_*" class="uploadAction" method="{1}">
-    		<result name="success">/pages/detailInfo/patient_excel_add.jsp</result>
-    	</action>
-    </package>
-    <package name="upload" namespace="/upload" extends="json-default">
-    	<action name="upload_*" class="uploadAction" method="upload{1}">
-    		<result type="json">
-    			<param name="root">resultMap</param>
-    		</result>
-    	</action>
-    </package>
+		</action>
+	</package>
+
+	<package name="template" namespace="/template" extends="exceptionPkg">
+		<action name="template_*" class="uploadAction" method="{1}">
+			<result name="success">/pages/detailInfo/patient_excel_add.jsp</result>
+		</action>
+	</package>
+	<package name="upload" namespace="/upload" extends="json-default">
+		<action name="upload_*" class="uploadAction" method="upload{1}">
+			<result type="json">
+				<param name="root">resultMap</param>
+			</result>
+		</action>
+	</package>
 </struts>

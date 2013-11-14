@@ -64,7 +64,7 @@ public class DictDao implements IDictDao {
 		return dictList;
 	}
 	
-	public List<Dict> getAllDictByParam(String paramName, int paramValue) {
+	public List<Dict> getAllDictByParam(String paramName, Object paramValue) {
 		List<Dict> dictList = new ArrayList<Dict>();
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("paramName", paramName);

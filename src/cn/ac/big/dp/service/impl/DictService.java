@@ -17,7 +17,7 @@ public class DictService implements IDictService {
 	public List<Dict> getAllDict(String status) {
 		return dictDao.getAllDict(status);
 	}
-	public List<Dict> getAllDictByParam(String paramName, int paramValue) {
+	public List<Dict> getAllDictByParam(String paramName, Object paramValue) {
 		return dictDao.getAllDictByParam(paramName, paramValue);
 	}
 	public void updateDict(Dict dict){

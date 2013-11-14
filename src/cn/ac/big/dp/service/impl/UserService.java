@@ -23,20 +23,20 @@ public class UserService implements IUserService
 		this.userDao = userDao;
 	}
 
-	public boolean addUser(User user) {
-		return this.userDao.addUser(user);
+	public void addUser(User user) {
+		this.userDao.addUser(user);
 	}
 
 	public User getUser(int userId) {
 		return this.userDao.getUser(userId);
 	}
 
-	public boolean deleteUserByUserId(int userId) {
-		return this.userDao.deleteUserByUserId(userId);
+	public void deleteUserByUserId(int userId) {
+		this.userDao.deleteUserByUserId(userId);
 	}
 
-	public boolean updateUser(User user) {
-		return this.userDao.updateUser(user);
+	public void updateUser(User user) {
+		this.userDao.updateUser(user);
 	}
 	
 
