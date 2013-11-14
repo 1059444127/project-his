@@ -3,3 +3,11 @@ classes
 /WebRoot/WEB-INF/classes/*.mex
 /WebRoot/upload
 /WebRoot/report
+/.externalToolBuilders
+/*.classpath
+/*.mymetadata
+/*.myumldata
+/*.project
+/*.properties
+/*
+/*
