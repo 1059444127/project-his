@@ -1,0 +1,39 @@
+@CHARSET "UTF-8";
+.detail{
+	float: left;
+	width: 350px;	
+	height: 100%;
+	margin-bottom: 90px;
+	margin-right: 20px;
+	text-align: right;
+}
+.searchPanal{
+	float: left;
+}
+.searchPanal select{
+	width: 120px;
+}
+.customSearch{
+	font-size: 12px;
+	color: #333;
+	display: inline-block;
+	padding: 4px;
+	vertical-align: middle;
+	margin-bottom: 6px;
+	margin-left: 5px;
+}
+.customSearch:hover{
+	background-color: #00ABA9;
+	color: #fff;
+}
+.searchName{
+	display: inline-block;
+	padding-top:  3px;
+	color: #333;
+}
+.searchClose{
+	font: italic bold 20px/1px arial,sans-serif;
+	color: red;
+	padding-bottom: 3px;
+	display: inline-block;
+}

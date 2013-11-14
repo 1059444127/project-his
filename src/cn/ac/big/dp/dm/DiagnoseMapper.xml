@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn/ac/big/dp/dm/LabItemMapper.xml">
+	
+	<select id="selectPropertyByParam" parameterType="HashMap" resultType="int">
+		select distinct(${needField}) from tb_diagitem
+		where ${propName} = #{propValue}
+		limit 0,1
+	</select>
+	
+	<select id="selectDiagCountByCondition" parameterType="HashMap" resultType="DiagCountDTO">
+		select subject, ${condition} as name, count(*) as count from tb_diagitem
+		group by subject, ${condition}
+		having subject = #{subject}
+	</select>
+	
+	<select id="selectPatientDiag" parameterType="HashMap" resultType="String">
+		select distinct(subject) from tb_diagitem
+		where patient_id = #{patientId}
+		<if test="visitId!=null">
+			<if test="visitId!=''">
+				and visit_id = #{visitId}
+			</if>
+		</if>
+	</select>
+	<select id="selectMyDiagNameCount" resultType="DiagCountDTO" parameterType="HashMap">
+		select ${condition} as name,count(*) as count,subject 
+		from tb_diagitem GROUP BY subject,${condition}
+		<if test="list!=null">
+			<if test="list.size>0">
+			having subject in
+				<foreach collection="list" open="(" close=")" separator="," item="diag">
+					#{diag}
+				</foreach>
+			</if>
+		</if>
+	</select>
+	
+	<select id="selectDiagName" resultType="String">
+		select DISTINCT(subject) from tb_diagnosisinfo
+	</select>
+	
+	<select id="selectDiagNameCount" resultType="DiagCountDTO" parameterType="List">
+		select COUNT(distinct(concat(patient_id,visit_id))) as count,subject as name from tb_diagnosisinfo GROUP BY subject
+		<if test="list!=null">
+			<if test="list.size>0">
+			having subject in
+				<foreach collection="list" open="(" close=")" separator="," item="diag">
+					#{diag}
+				</foreach>
+			</if>
+		</if>
+	</select>
+	
+	<select id="selectSubDiagNameCount" resultType="DiagCountDTO" parameterType="String">
+		select count(distinct(concat(patient_id,visit_id))) as count,CONCAT(diagnosis_desc,"-",diagnosis_value) as name,subject from tb_diagnosisinfo group by CONCAT(diagnosis_desc,diagnosis_value) HAVING subject = #{subject}
+	</select>
+	
+	<select id="selectCountDiagItemByParam" parameterType="DiagItemDTO" resultType="integer">
+		select count(*) from v_diagitem
+			<trim prefix="where" prefixOverrides="and">
+				<if test="patient_id!=null">
+					<if test="patient_id!=''">
+						patient_id = #{patient_id}
+					</if>
+				</if>
+				<if test="visit_id!=null">
+					<if test="visit_id!=''">
+						and visit_id = #{visit_id}
+					</if>
+				</if>
+				<if test="name!=null">
+					<if test="name!=''">
+						and name = #{name}
+					</if>
+				</if>
+				<if test="diagnosis_desc!=null">
+					<if test="diagnosis_desc!=''">
+						and diagnosis_desc = #{diagnosis_desc}
+					</if>
+				</if>
+				<if test="diagnosis_value!=null">
+					<if test="diagnosis_value!=''">
+						and diagnosis_value = #{diagnosis_value}
+					</if>
+				</if>
+				<if test="xy!=null">
+					<if test="xy!=''">
+						and xy = #{xy}
+					</if>
+				</if>
+				<if test="yj!=null">
+					<if test="yj!=''">
+						and yj = #{yj}
+					</if>
+				</if>
+			</trim>
+	</select>
+	<select id="selectDiagItemByParam" parameterType="hashMap" resultType="DiagItemDTO">
+		select patient_id,visit_id,name,diagnosis_desc,diagnosis_value,diagnosis_date, diagnosis_no,treat_days,treat_result,xy,yj from v_diagitem
+		<if test="diagItem!=null">
+			<trim prefix="where" prefixOverrides="and">
+				<if test="diagItem.patient_id!=null">
+					<if test="diagItem.patient_id!=''">
+						patient_id = #{diagItem.patient_id}
+					</if>
+				</if>
+				<if test="diagItem.visit_id!=null">
+					<if test="diagItem.visit_id!=''">
+						and visit_id = #{diagItem.visit_id}
+					</if>
+				</if>
+				<if test="diagItem.name!=null">
+					<if test="diagItem.name!=''">
+						name = #{diagItem.name}
+					</if>
+				</if>
+				<if test="diagItem.diagnosis_desc!=null">
+					<if test="diagItem.diagnosis_desc!=''">
+						and diagnosis_desc = #{diagItem.diagnosis_desc}
+					</if>
+				</if>
+				<if test="diagItem.diagnosis_value!=null">
+					<if test="diagItem.diagnosis_value!=''">
+						and diagnosis_value = #{diagItem.diagnosis_value}
+					</if>
+				</if>
+				<if test="diagItem.xy!=null">
+					<if test="diagItem.xy!=''">
+						and xy = #{diagItem.xy}
+					</if>
+				</if>
+				<if test="diagItem.yj!=null">
+					<if test="diagItem.yj!=''">
+						and yj = #{diagItem.yj}
+					</if>
+				</if>
+			</trim>
+		</if>
+		limit #{fromIndex},#{pageSize}
+	</select>
+	<select id="selectDiagnoseByParams" resultMap="DiagnoseResultMap" parameterType="hashMap">
+		select * from v_pat_diagnose_info
+		<trim prefix="where" prefixOverrides="and|or">
+			<foreach collection="list" item="param">
+				and ${param.paramName} = #{param.paramValue}
+			</foreach>		
+		</trim>
+	</select>
+	
+	<select id="selectDiagnoseResultByParams" resultMap="DiagnoseResultInfoMap" parameterType="map">
+		select * from tb_diagnosisinfo
+		where patient_id = #{patientid}
+		and visit_id = #{visitid}
+	</select>
+	
+	<select id="searchDiagResult" parameterType="hashMap" resultType="DResult">
+		select diagnosis_desc,diagnosis_value,subject 
+		from tb_diagnosisinfo
+		<trim prefix="where" prefixOverrides="and|or">
+			<foreach collection="list" item="param">
+				and ${param.paramName}
+				<if test="param.paramValue==null">
+					IS NULL
+				</if>
+				<if test="param.paramValue!=null">
+					= #{param.paramValue}
+				</if>
+			</foreach>		
+		</trim>
+	</select>
+	
+	<resultMap type="DiagnoseResult" id="DiagnoseResultInfoMap">
+		<id column="patient_id" property="patientid"/>
+		<result column="visit_id" property="visitid"/>
+		<result column="treat_days" property="treat_days"/>
+		<collection property="diagResult" ofType="DResult">
+			<id column="id" property="id"/>
+			<result column="diagnosis_type" property="diagnosis_type"/>
+			<result column="diagnosis_no" property="diagnosis_no"/>
+			<result column="diagnosis_desc" property="diagnosis_desc"/>
+			<result column="diagnosis_date" property="diagnosis_date"/>
+			<result column="treat_result" property="treat_result"/>
+			<result column="code_version" property="code_version"/>
+		</collection>
+	</resultMap>
+	
+	<resultMap type="Diagnose" id="DiagnoseResultMap">
+		<id column="id" property="id"/>
+		<result column="patient_id" property="patientId"/>
+		<result column="visit_id" property="visitId"/>
+		<result column="xy" property="smoke"/>
+		<result column="yj" property="alcohol"/>
+		<result column="xbs" property="curIllness"/>
+		<result column="jws" property="hisIllness"/>
+		<result column="grs" property="perHis"/>
+		<result column="jzs" property="familyHis"/>
+		<result column="hyjtsjc" property="specialItem"/>
+		<result column="cyzd" property="leaveDia"/>
+		<result column="name" property="patientName"/>
+		<result column="sex" property="sex"/>
+		<result column="age" property="age"/>
+		<result column="ssjg" property="operResult"/>
+		<result column="jl" property="operConclusion"/>
+		<result column="ssdate" property="operDate"/>
+	</resultMap>
+	
+</mapper>

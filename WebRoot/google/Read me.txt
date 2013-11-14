@@ -1,0 +1,2 @@
+Copy AjaxSourch.txt to C:\AjaxSourch.txt
+Copy AjaxDemo to "Tomcat 5.0\webapps\"

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn/ac/big/dp/dm/SubItemInfoMapper.xml">
+
+	<select id="selectLabSubItemInfoByParam" parameterType="hashMap" resultMap="SubLabItemInfoMap">
+		select id,report_item_name,result,units,result_date_time,t2.low,t2.high,t2.dict_name
+		from tb_labresultinfo t1 left join (select DISTINCT(dict_name),low,high from tb_dict) t2 on t1.report_item_name = t2.dict_name
+		where ${paramName} = #{paramValue}
+	</select>
+	
+	<select id="selectExamSubItemInfoByParam" parameterType="hashMap" resultMap="SubExamItemInfoMap">
+		select id,exam_item,exam_parameter,description,impression,result_date_time
+		from tb_examresultinfo
+		where ${paramName} = #{paramValue}
+	</select>
+	
+	<select id="selectSameItemValue" parameterType="hashMap" resultMap="ChartKVMap">
+		SELECT t2.id, Date(execute_date) as execute_date, result
+		FROM tb_labmasterinfo as t1,tb_labresultinfo as t2
+		WHERE t1.test_no = t2.test_no
+		<foreach collection="list" item="param">
+			and ${param.paramName} = #{param.paramValue}
+		</foreach>
+		order by execute_date
+	</select>
+	
+	<resultMap type="ChartKV" id="ChartKVMap">
+		<id column="id" property="id" />
+		<result column="execute_date" property="date" />
+		<result column="result" property="value"/>
+	</resultMap>
+	
+	<resultMap type="SubItemInfo" id="SubLabItemInfoMap">
+		<id column="id" property="id" />
+		<result column="report_item_name" property="reportItemName" />
+		<result column="result" property="result"/>
+		<result column="units" property="units" />
+		<result column="low" property="low"/>
+		<result column="high" property="high"/>
+		<result column="result_date_time" property="resultDateTime"/>
+	</resultMap>
+	
+	<resultMap type="SubItemInfo" id="SubExamItemInfoMap">
+		<id column="id" property="id" />
+		<result column="exam_item" property="examItem" />
+		<result column="description" property="description"/>
+		<result column="impression" property="impression" />
+		<result column="exam_parameter" property="examParameter"/>
+		<result column="result_date_time" property="resultDateTime"/>
+	</resultMap>
+	
+</mapper>

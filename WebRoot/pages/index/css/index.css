@@ -1,0 +1,28 @@
+@CHARSET "UTF-8";
+header{
+	text-align: right;
+	margin: 20px 70px;
+	height: 50px;
+}
+.user{	
+	position: fixed;
+	_position: absolute;
+	right: 70px;
+}
+.userImg{
+	width: 64px;
+	height:64px;
+	display: inline-block;
+	background: url(../../../resources/imgs/User.png);
+}
+.userName{
+	display: inline-block;
+	height: 64px;
+	vertical-align: middle;
+	color: #008287;
+	font-weight: 600;
+	font-size: 20px;
+	font-family: "微软雅黑"";
+	line-height: 1px;
+}
+.ahidden{ display: none; }

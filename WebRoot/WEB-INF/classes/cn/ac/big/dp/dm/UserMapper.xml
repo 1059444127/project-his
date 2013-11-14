@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn/ac/big/dp/dm/UserMapper.xml">
+
+	<select id="selectAllUser" resultMap="UserResultMap">
+		select t1.user_id,t1.username,t1.password,t1.name,t1.status, group_concat(t3.role_desc) as role
+		from tb_user t1 
+		left join tb_authority t2 on t1.user_id = t2.user_id
+		left join tb_role t3 on t2.role_id = t3.role_id
+		group by t1.user_id
+	</select>
+	
+	<select id="selectUser" parameterType="Integer" resultMap="UserResultMap">
+		select u_id,u_name,password,age,status
+		from tb_user
+		where u_id = #{userId}
+	</select>
+	
+	<insert id="insertUser" parameterType="User">
+		insert into tb_user(name, username,password,status)
+		values (#{name}, #{username},md5(#{password}),#{status})	
+	</insert>
+	
+	<delete id="deleteUser" parameterType="Integer">
+		delete
+		from tb_user
+		where user_id = #{userId}
+	</delete>
+	
+	<update id="updateUser" parameterType="User">
+		update tb_user
+		set username = #{username},
+			name = #{name},
+			password = md5(#{password})
+		where user_id = #{userId}
+	</update>
+	
+	<resultMap type="User" id="UserResultMap" >
+		<id column="user_id" property="userId"/>
+		<result column="username" property="username"/>
+		<result column="name" property="name"/>
+		<result column="password" property="password"/>
+		<result column="age" property="age"/>
+		<result column="sex" property="sex"/>
+		<result column="birthday" property="birthday"/>
+		<result column="status" property="status"/>
+		<result column="role" property="role"/>
+	</resultMap> 
+	
+	
+</mapper>

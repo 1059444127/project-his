@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+  http://www.springframework.org/schema/beans 
+  http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+  http://www.springframework.org/schema/context 
+  http://www.springframework.org/schema/context/spring-context-2.5.xsd
+  http://www.springframework.org/schema/jee 
+  http://www.springframework.org/schema/jee/spring-jee-2.5.xsd
+  http://www.springframework.org/schema/tx 
+  http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+  http://www.springframework.org/schema/aop
+  http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
+
+	<context:property-placeholder location="classpath:mysql.properties" />
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}"></property>
+		<property name="password" value="${jdbc.password}"></property>
+	</bean>
+	
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+	    <tx:attributes>
+	        <tx:method name="select*" propagation="NOT_SUPPORTED"/>
+	        <tx:method name="save*" rollback-for="Exception"/>
+	        <tx:method name="delete*" rollback-for="Exception"/>
+	    </tx:attributes>
+	</tx:advice>
+	
+	<aop:config>
+	       <aop:pointcut expression="execution(* cn.ac.big.dp.service.impl.PatientService.*(..))" id="tp"/>
+	       <aop:advisor advice-ref="txAdvice" pointcut-ref="tp"/>
+	 </aop:config>
+	   
+	
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="configLocation" value="classpath:mybatis-config.xml" />
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+    <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">  
+        <constructor-arg index="0" ref="sqlSessionFactory" />
+    </bean> 
+	
+	<!-- Dao -->
+	<bean id="userDao" class="cn.ac.big.dp.dao.impl.UserDao" scope="singleton">
+		<property name="sqlSessionTemplate" ref="sqlSessionTemplate" />
+	</bean>
+	<bean id="dictDao" class="cn.ac.big.dp.dao.impl.DictDao" scope="singleton">
+		<property name="sqlSessionTemplate" ref="sqlSessionTemplate" />
+	</bean>
+	<bean id="testResultDao" class="cn.ac.big.dp.dao.impl.TestResultDao" scope="singleton">
+		<property name="sqlSessionTemplate" ref="sqlSessionTemplate" />
+	</bean>
+	<bean id="conditionDao" class="cn.ac.big.dp.dao.impl.ConditionDao" scope="singleton">
+		<property name="sqlSessionTemplate" ref="sqlSessionTemplate" />
+	</bean>
+	<bean id="patientDao" class="cn.ac.big.dp.dao.impl.PatientDao" scope="singleton">
+		<property name="sqlSessionTemplate" ref="sqlSessionTemplate" />
+	</bean>
+	<bean id="itemDao" class="cn.ac.big.dp.dao.impl.ItemDao" scope="singleton">
+		<property name="sqlSessionTemplate" ref="sqlSessionTemplate" />
+	</bean>
+	<bean id="drugDao" class="cn.ac.big.dp.dao.impl.DrugDao" scope="singleton">
+		<property name="sqlSessionTemplate" ref="sqlSessionTemplate" />
+	</bean>
+	<bean id="subItemInfoDao" class="cn.ac.big.dp.dao.impl.SubItemInfoDao" scope="singleton">
+		<property name="sqlSessionTemplate" ref="sqlSessionTemplate" />
+	</bean>
+	<bean id="diagnoseDao" class="cn.ac.big.dp.dao.impl.DiagnoseDao" scope="singleton">
+		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
+	</bean>
+	<bean id="excelUtil" class="cn.ac.big.dp.util.ExcelUtils" scope="singleton">
+		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
+	</bean>
+	
+	<!-- Service -->
+	<bean id="userService" class="cn.ac.big.dp.service.impl.UserService" scope="prototype">
+		<property name="userDao" ref="userDao" />
+	</bean>
+	<bean id="dictService" class="cn.ac.big.dp.service.impl.DictService" scope="prototype">
+		<property name="dictDao" ref="dictDao" />
+	</bean>
+	<bean id="testSearchService" class="cn.ac.big.dp.service.impl.TestSearchService" scope="prototype">
+		<property name="testResultDao" ref="testResultDao" />
+		<property name="dictDao" ref="dictDao" />
+	</bean>
+	<bean id="conditionService" class="cn.ac.big.dp.service.impl.ConditionService" scope="prototype">
+		<property name="conditionDao" ref="conditionDao" />
+	</bean>
+	<bean id="patientService" class="cn.ac.big.dp.service.impl.PatientService" scope="prototype">
+		<property name="patientDao" ref="patientDao" />
+	</bean>
+	<bean id="itemService" class="cn.ac.big.dp.service.impl.ItemService" scope="prototype">
+		<property name="itemDao" ref="itemDao" />
+	</bean>
+	<bean id="diagnoseService" class="cn.ac.big.dp.service.impl.DiagnoseService" scope="prototype">
+		<property name="diagnoseDao" ref="diagnoseDao" />
+	</bean>
+	<bean id="subItemInfoService" class="cn.ac.big.dp.service.impl.SubItemInfoService" scope="prototype">
+		<property name="subItemInfoDao" ref="subItemInfoDao" />
+	</bean>
+	<bean id="drugService" class="cn.ac.big.dp.service.impl.DrugService" scope="prototype">
+		<property name="drugDao" ref="drugDao" />
+	</bean>
+	
+	<!-- Action -->
+	<bean id="uploadAction" class="cn.ac.big.dp.action.UploadAction" scope="prototype">
+		<property name="dictService" ref="dictService" />
+		<property name="drugService" ref="drugService"/>
+	</bean>
+	<bean id="chartAction" class="cn.ac.big.dp.action.ChartAction" scope="prototype">
+		<property name="diagnoseService" ref="diagnoseService" />
+		<property name="itemService" ref="itemService"/>
+		<property name="subItemInfoService" ref="subItemInfoService"/>
+	</bean>
+	<bean id="userAction" class="cn.ac.big.dp.action.UserAction" scope="prototype">
+		<property name="userService" ref="userService"/>
+	</bean>
+	<bean id="diagnoseAction" class="cn.ac.big.dp.action.DiagnoseAction" scope="prototype">
+		<property name="diagnoseService" ref="diagnoseService"/>
+	</bean>
+	<bean id="searchAction" class="cn.ac.big.dp.action.SearchAction" scope="prototype">
+		<property name="dictService" ref="dictService" />
+		<property name="testSearchService" ref="testSearchService"/>
+		<property name="conditionService" ref="conditionService" />
+		<property name="patientService" ref="patientService" />
+		<property name="drugService" ref="drugService"/>
+	</bean>
+	<bean id="conditionAction" class="cn.ac.big.dp.action.ConditionAction" scope="prototype">
+		<property name="conditionService" ref="conditionService" />
+	</bean>
+	<bean id="patientAction" class="cn.ac.big.dp.action.PatientAction" scope="prototype">
+		<property name="patientService" ref="patientService"/>
+		<property name="diagnoseService" ref="diagnoseService"/>
+	</bean>
+	<bean id="itemAction" class="cn.ac.big.dp.action.ItemAction" scope="prototype">
+		<property name="itemService" ref="itemService" />
+		<property name="subItemInfoService" ref="subItemInfoService"/>
+		<property name="diagnoseService" ref="diagnoseService"/>
+	</bean>
+	<bean id="exportFileAction" class="cn.ac.big.dp.action.ExportFileAction" scope="prototype">
+		<property name="excelUtils" ref="excelUtil"/>
+		<property name="subItemInfoService" ref="subItemInfoService"/>
+		<property name="diagnoseService" ref="diagnoseService"/>
+		<property name="dictService" ref="dictService" />
+		<property name="drugService" ref="drugService"/>
+	</bean>
+	<bean id="reportAction" class="cn.ac.big.dp.action.ReportAction" scope="prototype">
+		<property name="diagnoseService" ref="diagnoseService"/>
+	</bean>
+	<bean id="bioAction" class="cn.ac.big.dp.action.BioAction" scope="prototype"></bean>
+<!--  	
+	<bean id="cacheAspect" class="cn.ac.big.dp.aspect.CacheAspect">
+		<property name="cache" ref="ehCache"/>
+	</bean>
+-->
+<!-- 	<aop:config> -->
+<!-- 		<aop:pointcut expression="execution(* cn.ac.big.dp.service.impl.TestSearchService.searchPatientVisit(..)))" id="cachePointCut"/> -->
+<!-- 		<aop:aspect ref="cacheAspect"> -->
+<!-- 			<aop:around method="selectFromCache" pointcut-ref="cachePointCut"/> -->
+<!-- 		</aop:aspect> -->
+<!-- 	</aop:config> -->
+	
+<!--  	<bean id="myCacheManager"
+		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+		<property name="configLocation">
+			<value>classpath:ehcache.xml</value>
+		</property>
+	</bean>
+	<bean id="ehCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+		<property name="cacheManager">
+			<ref local="myCacheManager" />
+		</property>
+		<property name="cacheName">
+			<value>mycache</value>
+		</property>
+	</bean>
+-->
+</beans>

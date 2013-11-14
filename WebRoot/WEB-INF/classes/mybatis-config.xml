@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	
+	<properties>
+		<property name="dialect" value="mysql" />
+	</properties>
+
+	<typeAliases>
+		<typeAlias alias="User" type="cn.ac.big.dp.bean.User" />
+		<typeAlias alias="Dict" type="cn.ac.big.dp.bean.Dict" />
+		<typeAlias alias="Condition" type="cn.ac.big.dp.bean.Condition"/>
+		<typeAlias alias="GroupCondition" type="cn.ac.big.dp.bean.GroupCondition"/>
+		<typeAlias alias="Patient" type="cn.ac.big.dp.bean.Patient" />
+		<typeAlias alias="Visit" type="cn.ac.big.dp.bean.Visit" />
+		<typeAlias alias="Item" type="cn.ac.big.dp.bean.Item" />
+		<typeAlias alias="SubItemInfo" type="cn.ac.big.dp.bean.SubItemInfo" />
+		<typeAlias alias="MainItem" type="cn.ac.big.dp.bean.MainItem" />
+		<typeAlias alias="ChartKV" type="cn.ac.big.dp.util.ChartKV" />
+		<typeAlias alias="SearchResult" type="cn.ac.big.dp.bean.SearchResult" />
+		<typeAlias alias="Diagnose" type="cn.ac.big.dp.bean.Diagnose" />
+		<typeAlias alias="TestItem" type="cn.ac.big.dp.bean.TestItem" />
+		<typeAlias alias="PatientVisit" type="cn.ac.big.dp.bean.PatientVisit" />
+		<typeAlias alias="DResult" type="cn.ac.big.dp.bean.DResult" />
+		<typeAlias alias="DiagnoseResult" type="cn.ac.big.dp.bean.DiagnoseResult" />
+		<typeAlias alias="Drug" type="cn.ac.big.dp.bean.Drug" />
+		<typeAlias alias="FastSearchResult" type="cn.ac.big.dp.bean.FastSearchResult" />
+		<typeAlias alias="DiagItemDTO" type="cn.ac.big.dp.bean.DiagItemDTO" />
+		<typeAlias alias="DiagCountDTO" type="cn.ac.big.dp.bean.DiagCountDTO" />
+		
+	</typeAliases>
+		
+	
+	<mappers>
+		<mapper resource="cn/ac/big/dp/dm/UserMapper.xml" />
+		<mapper resource="cn/ac/big/dp/dm/DictMapper.xml" />
+		<mapper resource="cn/ac/big/dp/dm/TestResultMapper.xml" />
+		<mapper resource="cn/ac/big/dp/dm/ConditionMapper.xml" />
+		<mapper resource="cn/ac/big/dp/dm/GroupCondMapper.xml" />
+		<mapper resource="cn/ac/big/dp/dm/PatientMapper.xml" />
+		<mapper resource="cn/ac/big/dp/dm/VisitMapper.xml" />
+		<mapper resource="cn/ac/big/dp/dm/ItemMapper.xml" />
+		<mapper resource="cn/ac/big/dp/dm/SubItemInfoMapper.xml" />
+		<mapper resource="cn/ac/big/dp/dm/DiagnoseMapper.xml" />
+		<mapper resource="cn/ac/big/dp/dm/DrugMapper.xml" />
+	</mappers>
+		
+		
+</configuration>		
+			

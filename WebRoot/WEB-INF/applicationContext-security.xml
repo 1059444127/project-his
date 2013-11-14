@@ -1,0 +1,41 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+
+	<http auto-config='true'>
+		<intercept-url pattern="/pages/login/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		<intercept-url pattern="/scripts/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		<intercept-url pattern="/resources/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+		
+		<intercept-url pattern="/pages/admin/**" access="ROLE_ADMIN" />
+		<intercept-url pattern="/admin/**" access="ROLE_ADMIN" />
+		<intercept-url pattern="/**" access="ROLE_USER" />
+		<form-login login-page="/pages/login/login.jsp"
+			authentication-failure-url="/pages/login/login.jsp?error=true"
+			default-target-url="/pages/index/index.jsp" />
+		<logout logout-success-url="/pages/login/login.jsp"/>
+        <!-- session超时后重定向的登陆页面 --> 
+        <session-management invalid-session-url="/pages/login/login.jsp" /> 
+	</http>
+
+
+	<authentication-manager>
+		<authentication-provider>
+			<password-encoder hash="md5">
+			</password-encoder>
+			<jdbc-user-service data-source-ref="dataSource"
+				users-by-username-query="select username,password,status as enabled
+                                         from tb_user
+                                        where username=?"
+				authorities-by-username-query="select u.username,r.role_name as authority
+                                             from tb_user u
+                                             join tb_authority ur
+                                               on u.user_id=ur.user_id
+                                             join tb_role r
+                                               on r.role_id=ur.role_id
+                                            where u.username=?" />
+		</authentication-provider>
+	</authentication-manager>
+</beans:beans>

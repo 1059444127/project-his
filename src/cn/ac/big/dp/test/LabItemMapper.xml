@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn/ac/big/dp/dm/LabItemMapper.xml">
+
+	<select id="selectLabItem" resultMap="LabItemResultMap"
+		parameterType="hashMap">
+		select t1.test_no, t1.subject, t2.id,
+		t2.report_item_name, t2.units
+		from tb_labmasterinfo as
+		t1,tb_labresultinfo as t2 where t1.test_no = t2.test_no
+	</select>
+	<resultMap type="LabItem" id="LabItemResultMap">
+		<id column="test_no" property="testNo" />
+		<result column="subject" property="subject" />
+		<collection property="subItemList" ofType="SubItemInfo"
+			resultMap="SubItemInfoMap" />
+	</resultMap>
+	
+</mapper>

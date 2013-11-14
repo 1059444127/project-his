@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn/ac/big/dp/dm/DictMapper.xml">
+	
+	
+
+	<select id="selectDictByParam" resultMap="SubDictMap"
+		parameterType="hashMap">
+		select
+		dict_id,dict_name,dict_name_en,type,unit,exam_lab_flag,dict_parent_id,level,status,display_flag
+		from tb_dict
+		where ${paramName} = #{paramValue}
+	</select>
+	
+	<select id="selectDictNameByParam" resultType="String" parameterType="hashMap">
+		select dict_name
+		from tb_dict
+		where ${paramName} = #{paramValue}
+	</select>
+	
+	<select id="selectDictByParams" resultMap="SubDictMap"
+		parameterType="hashMap">
+		select
+		dict_id,dict_name,dict_name_en,type,unit,exam_lab_flag,dict_parent_id,level,status,display_flag
+		from tb_dict
+		<trim prefix="where" prefixOverrides="and|or">
+			<foreach collection="list" item="pv">
+				and ${pv.paramName} = #{pv.paramValue}
+			</foreach>
+		</trim>
+	</select>
+	
+	<select id="selectSubDictByParam" resultMap="DictResultMap" parameterType="hashMap">
+		SELECT 
+			a.dict_id,
+			a.dict_name, 
+			a.dict_name_en, 
+			a.unit,
+			a.type,
+			a.status,
+			b.dict_id p_dict_id, 
+			b.dict_name p_dict_name,
+			b.dict_name_en p_dict_name_en, 
+			b.exam_lab_flag p_exam_lab_flag,
+			b.unit as p_unit,
+			b.type as p_type,
+			b.status as p_status
+		FROM tb_dict a, tb_dict b
+		WHERE a.dict_parent_id = b.dict_id
+		AND a.${paramName} = #{paramValue}
+	</select>
+	
+	<select id="selectAllDictByParam" resultMap="SimpleDictMap" parameterType="hashMap">
+		select dict_id, p_dict_name, dict_name, display_flag
+		from v_dict_info
+		where ${paramName} = #{paramValue}
+	</select>
+	
+	<select id="selectAllDict" resultMap="DictResultMap" parameterType="hashMap">
+		SELECT 
+			a.dict_id,
+			a.dict_name, 
+			a.dict_name_en, 
+			a.unit,
+			a.type,
+			a.option,
+			a.status,
+			b.dict_id p_dict_id, 
+			b.dict_name p_dict_name,
+			b.dict_name_en p_dict_name_en, 
+			b.exam_lab_flag p_exam_lab_flag,
+			b.unit as p_unit,
+			b.type as p_type,
+			b.status as p_status
+			
+		FROM tb_dict a, tb_dict b
+		WHERE a.dict_parent_id = b.dict_id
+		<if test="status != null">
+			and a.status = #{status} and b.status = #{status}
+		</if>
+	</select>
+	
+	<select id="selectAllSubDict" resultMap="SubDictMap" parameterType="hashMap">
+		select dict_name, unit, exam_lab_flag, type
+		from tb_dict_sub
+		<if test="testType!=null">
+			where exam_lab_flag = #{testType}
+		</if>
+	</select>
+	
+	<update id="updateDict" parameterType="Dict" >
+		UPDATE tb_dict
+		SET dict_name = #{dictName},status=#{status},display_flag=#{displayFlag}
+		WHERE dict_id = #{dictId}
+	</update>
+	
+
+	<resultMap type="Dict" id="DictResultMap">
+		<id column="p_dict_id" property="dictId" />
+		<result column="p_dict_name" property="dictName" />
+		<result column="p_dict_name_en" property="dictNameEn" />
+		<result column="p_exam_lab_flag" property="elFlag" />
+		<result column="p_type" property="type"/>
+		<result column="p_unit" property="unit"/>
+		<result column="p_status" property="status"/>
+		
+		<collection property="subDict" ofType="Dict" resultMap="SubDictMap"/>
+	</resultMap>
+
+	<resultMap type="Dict" id="SubDictMap">
+		<id column="dict_id" property="dictId" />
+		<result column="dict_name" property="dictName" />
+		<result column="dict_name_en" property="dictNameEn" />
+		<result column="type" property="type" />
+		<result column="unit" property="unit" />
+		<result column="exam_lab_flag" property="elFlag" />
+		<result column="dict_parent_id" property="dictPId" />
+		<result column="status" property="status"/>
+		<result column="option" property="option"/>
+		<result column="display_flag" property="displayFlag"/>
+	</resultMap>
+	
+	<resultMap type="Dict" id="SimpleDictMap">
+		<id column="dict_id" property="dictId" />
+		<result column="dict_name" property="dictName" />
+		<result column="p_dict_name" property="pDictName" />
+		<result column="display_flag" property="displayFlag"/>
+	</resultMap>
+
+
+</mapper>

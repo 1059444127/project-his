@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="ehcache.xsd"
+         updateCheck="true" monitoring="autodetect"
+         dynamicConfig="true">
+         
+    <diskStore path="D:/301/cache"/>
+
+	<!-- 
+		缓存最大数目
+		缓存是否持久
+		系统当机时，是否保存到磁盘
+		当缓存闲置n秒后销毁
+		当缓存存活n秒后销毁
+		..
+		..
+	 -->
+    <cache
+    	   name="mycache"
+    	   maxElementsInMemory="10000"
+           eternal="true"
+           overflowToDisk="true"
+           diskPersistent="true"
+           diskExpiryThreadIntervalSeconds="120000">
+    </cache>
+
+
+</ehcache>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn/ac/big/dp/dm/ConditionMapper.xml">
+
+	<select id="selectCondition" resultMap="ConditionResultMap">
+		select fre_sel_cond_id, field_name,field_name_en, test_type, main_field_name, operator, field_val1, field_val2, andOr, group_id
+		from tb_fre_select_condition
+		order by create_date asc
+	</select>
+	
+	<insert id="insertCondition" parameterType="Condition">
+		insert into tb_fre_select_condition(field_name,field_name_en, test_type, main_field_name,operator,field_val1,field_val2,andOr, group_id)
+		values(#{fieldName},#{fieldNameEn}, #{testType}, #{mainFieldName},#{operator},#{value1},#{value2},#{andOr},#{group})
+	</insert>
+	
+	<delete id="deleteCondition" parameterType="String">
+		delete from tb_fre_select_condition
+		where group_id = #{group_id}
+	</delete>
+	
+	<select id="selectConditionByParam" resultMap="ConditionMap" parameterType="hashMap">
+		select concat(main_field_name, field_name) as item, fre_sel_cond_id, field_name, field_name_en, test_type, main_field_name,operator, field_val1, field_val2, andOr, group_id
+		from tb_fre_select_condition
+		where ${paramName} = #{paramValue}
+	</select>
+
+	<resultMap type="Condition" id="ConditionMap">
+		<id column="fre_sel_cond_id" property="freCondId" />
+		<result column="item" property="item"/>
+		<result column="field_name" property="fieldName" />
+		<result column="field_name_en" property="fieldNameEn"/>
+		<result column="test_type" property="testType"/>
+		<result column="main_field_name" property="mainFieldName"/>
+		<result column="operator" property="operator" />
+		<result column="field_val1" property="value1" />
+		<result column="field_val2" property="value2"/>
+		<result column="andOr" property="andOr"/>
+	</resultMap>
+	
+	<resultMap type="GroupCondition" id="ConditionResultMap">
+		<id column="group_id" property="group" javaType="String"/>
+		<collection property="groupList" ofType="Condition" resultMap="ConditionMap"/>
+	</resultMap>
+
+</mapper>

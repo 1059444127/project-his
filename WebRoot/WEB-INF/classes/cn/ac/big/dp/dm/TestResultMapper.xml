@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn/ac/big/dp/dm/TestResultMapper.xml">
+
+	<select id="selectTestResultFast" parameterType="map" resultMap="fastResult">
+		select concat(t1.patient_id, t1.visit_id)as id, t1.patient_id,
+		t1.visit_id, t1.item, t1.subject, t1.report_item_name, t1.result
+		from
+		tb_labitem t1
+		where (patient_id,visit_id) in
+		<foreach collection="list" item="pv" open="(" close=")"
+			separator=",">
+			(#{pv.patientId},#{pv.visitId})
+		</foreach>
+	</select>
+	<select id="selectVPatientVisitFast" parameterType="map"
+		resultMap="SearchResultMap">
+		select concat(patient_id, visit_id) as id, name, patient_id, visit_id,
+		sex, age, xy, yj
+		from
+		v_patvisit_info
+		where (patient_id,visit_id) in
+		<foreach collection="list" item="pv" open="(" close=")"
+			separator=",">
+			(#{pv.patientId},#{pv.visitId})
+		</foreach>
+	</select>
+
+	<select id="searchChaoshengResult" parameterType="HashMap"
+		resultType="HashMap">
+		select * from examresultinfo_detail
+		<trim prefix="where" prefixOverrides="and|or">
+			<foreach collection="list" item="param">
+				and ${param.paramName}
+				<if test="param.paramValue==null">
+					IS NULL
+				</if>
+				<if test="param.paramValue!=null">
+					= #{param.paramValue}
+				</if>
+			</foreach>
+		</trim>
+	</select>
+
+
+	<resultMap type="FastSearchResult" id="fastResult">
+		<id column="id" property="id" />
+		<collection property="itemResults" ofType="FastSearchResult" />
+	</resultMap>
+
+	<select id="selectExamResultSet" resultMap="PatientVisitMap">
+		select id, patient_id, visit_id
+		from
+		tb_examitem
+		<trim prefix="where" prefixOverrides="and|or">
+			item = #{condition.item}
+			<if test="condition.value1!=''">
+				<choose>
+					<when test="condition.operator=='gt'">
+						and result >
+						#{condition.value1}+0
+					</when>
+					<when test="condition.operator=='nlt'">
+						and result >=
+						#{condition.value1}+0
+					</when>
+					<when test="condition.operator == 'eq'">
+						and result =
+						#{condition.value1}+0
+					</when>
+					<when test="condition.operator == 'lt'">
+						and result <![CDATA[<]]>
+						#{condition.value1}+0
+					</when>
+					<when test="condition.operator == 'ngt'">
+						and result <![CDATA[<]]>=
+						#{condition.value1}+0
+					</when>
+					<when test="condition.operator=='date_gt'">
+						and result >
+						#{condition.value1}+0
+					</when>
+					<when test="condition.operator=='date_lt'">
+						and result <![CDATA[<]]>
+						#{condition.value1}+0
+					</when>
+					<when test="condition.operator == 'date_eq'">
+						and result =
+						#{condition.value1}+0
+					</when>
+					<when test="condition.operator == 'string_eq'">
+						and result =
+						#{condition.value1}
+					</when>
+					<when test="condition.operator == 'string_lk'">
+						and result like
+						'%#{condition.value1}%' </when>
+					<when test="condition.operator == 'count_1'">
+						and result =
+						#{condition.value1}+0
+					</when>
+					<when test="condition.operator == 'count_m'">
+						and result in
+						<foreach collection="condition.value1s" index="value"
+							open="(" close=")" separator=",">
+							#{value}
+						</foreach>
+					</when>
+					<when test="condition.operator == 'normal'">
+						and result = 1
+					</when>
+					<when test="condition.operator == 'unnormal'">
+						and result = 0
+					</when>
+					<when test="condition.operator == 'sex_m'">
+						and result = 1
+					</when>
+					<when test="condition.operator == 'sex_f'">
+						and result = 0
+					</when>
+					<when test="condition.operator == 'judge_yes'">
+						and result = 1
+					</when>
+					<when test="condition.operator == 'judge_no'">
+						and result = 0
+					</when>
+					<when test="condition.value2!=''">
+						<if test="condition.operator == 'region'">
+							and result between #{condition.value1}+0 and
+							#{condition.value2}+0
+						</if>
+						<if test="condition.operator == 'date_region'">
+							and result between #{condition.value1} and
+							#{condition.value2}
+						</if>
+					</when>
+				</choose>
+			</if>
+		</trim>
+	</select>
+
+	<select id="selectTestResultSet0" resultMap="PatientVisitMap">
+		select id, patient_id, visit_id
+		from
+		tb_labitem
+		<trim prefix="where" prefixOverrides="and|or">
+			and item = #{condition.item}
+			<if test="condition.value1!=''">
+				<choose>
+					<when test="condition.operator=='gt'">
+						and result >
+						#{condition.value1}+0
+					</when>
+					<when test="condition.operator=='nlt'">
+						and result >=
+						#{condition.value1}+0
+					</when>
+					<when test="condition.operator == 'eq'">
+						and result =
+						#{condition.value1}+0
+					</when>
+					<when test="condition.operator == 'lt'">
+						and result <![CDATA[<]]>
+						#{condition.value1}+0
+					</when>
+					<when test="condition.operator == 'ngt'">
+						and result <![CDATA[<]]>=
+						#{condition.value1}+0
+					</when>
+					<when test="condition.operator=='date_gt'">
+						and result >
+						#{condition.value1}+0
+					</when>
+					<when test="condition.operator=='date_lt'">
+						and result <![CDATA[<]]>
+						#{condition.value1}+0
+					</when>
+					<when test="condition.operator == 'date_eq'">
+						and result =
+						#{condition.value1}+0
+					</when>
+					<when test="condition.operator == 'string_eq'">
+						and result =
+						#{condition.value1}
+					</when>
+					<when test="condition.operator == 'string_lk'">
+						and result like
+						'%#{condition.value1}%' </when>
+					<when test="condition.operator == 'count_1'">
+						and result =
+						#{condition.value1}+0
+					</when>
+					<when test="condition.operator == 'count_m'">
+						and result in
+						<foreach collection="condition.value1s" index="value"
+							open="(" close=")" separator=",">
+							#{value}
+						</foreach>
+					</when>
+					<when test="condition.operator == 'normal'">
+						and result = 1
+					</when>
+					<when test="condition.operator == 'unnormal'">
+						and result = 0
+					</when>
+					<when test="condition.operator == 'sex_m'">
+						and result = 1
+					</when>
+					<when test="condition.operator == 'sex_f'">
+						and result = 0
+					</when>
+					<when test="condition.operator == 'judge_yes'">
+						and result = 1
+					</when>
+					<when test="condition.operator == 'judge_no'">
+						and result = 0
+					</when>
+					<when test="condition.value2!=''">
+						<if test="condition.operator == 'region'">
+							and result between #{condition.value1}+0 and
+							#{condition.value2}+0
+						</if>
+						<if test="condition.operator == 'date_region'">
+							and result between #{condition.value1} and
+							#{condition.value2}
+						</if>
+					</when>
+				</choose>
+			</if>
+		</trim>
+
+	</select>
+	<select id="selectTestResultSet1" resultMap="PatientVisitMap">
+		select id, patient_id, visit_id
+		from
+		tb_labitem
+		<trim prefix="where" prefixOverrides="and|or">
+			and report_item_name = #{condition.fieldName}
+			<if test="condition.value1!=''">
+				<choose>
+					<when test="condition.operator=='gt'">
+						and result >
+						#{condition.value1}+0
+					</when>
+					<when test="condition.operator=='nlt'">
+						and result >=
+						#{condition.value1}+0
+					</when>
+					<when test="condition.operator == 'eq'">
+						and result =
+						#{condition.value1}+0
+					</when>
+					<when test="condition.operator == 'lt'">
+						and result <![CDATA[<]]>
+						#{condition.value1}+0
+					</when>
+					<when test="condition.operator == 'ngt'">
+						and result <![CDATA[<]]>=
+						#{condition.value1}+0
+					</when>
+					<when test="condition.operator=='date_gt'">
+						and result >
+						#{condition.value1}+0
+					</when>
+					<when test="condition.operator=='date_lt'">
+						and result <![CDATA[<]]>
+						#{condition.value1}+0
+					</when>
+					<when test="condition.operator == 'date_eq'">
+						and result =
+						#{condition.value1}+0
+					</when>
+					<when test="condition.operator == 'string_eq'">
+						and result =
+						#{condition.value1}
+					</when>
+					<when test="condition.operator == 'string_lk'">
+						and result like
+						'%#{condition.value1}%'
+					</when>
+					<when test="condition.operator == 'count_1'">
+						and result =
+						#{condition.value1}+0
+					</when>
+					<when test="condition.operator == 'count_m'">
+						and result in
+						(#{condition.value1})
+					</when>
+					<when test="condition.operator == 'normal'">
+						and result = 1
+					</when>
+					<when test="condition.operator == 'unnormal'">
+						and result = 0
+					</when>
+					<when test="condition.operator == 'sex_m'">
+						and result = 1
+					</when>
+					<when test="condition.operator == 'sex_f'">
+						and result = 0
+					</when>
+					<when test="condition.operator == 'judge_yes'">
+						and result = 1
+					</when>
+					<when test="condition.operator == 'judge_no'">
+						and result = 0
+					</when>
+					<when test="condition.value2!=''">
+						<if test="condition.operator == 'region'">
+							and result between #{condition.value1}+0 and
+							#{condition.value2}+0
+						</if>
+						<if test="condition.operator == 'date_region'">
+							and result between #{condition.value1} and
+							#{condition.value2}
+						</if>
+					</when>
+				</choose>
+			</if>
+		</trim>
+
+	</select>
+	<select id="searchExamResult" resultMap="TestItemMap"
+		parameterType="HashMap">
+		select item, subject, report_item_name, result
+		from tb_examitem
+		<trim prefix="where" prefixOverrides="and|or">
+			<foreach collection="list" item="param">
+				and ${param.paramName}
+				<if test="param.paramValue==null">
+					IS NULL
+				</if>
+				<if test="param.paramValue!=null">
+					= #{param.paramValue}
+				</if>
+			</foreach>
+		</trim>
+	</select>
+	<select id="searchTestResult" resultMap="TestItemMap"
+		parameterType="hashMap">
+		select t1.item, t1.subject, t1.report_item_name, t1.result
+		FROM
+		tb_labitem as t1
+		<trim prefix="where" prefixOverrides="and|or">
+			<foreach collection="list" item="param">
+				and ${param.paramName}
+				<if test="param.paramValue==null">
+					IS NULL
+				</if>
+				<if test="param.paramValue!=null">
+					= #{param.paramValue}
+				</if>
+			</foreach>
+		</trim>
+	</select>
+
+	<resultMap type="TestItem" id="TestItemMap">
+		<id column="item" property="item" />
+		<result column="subject" property="subject" />
+		<result column="report_item_name" property="reportName" />
+		<result column="result" property="result" />
+	</resultMap>
+
+	<select id="selectVPatVisitInfoByParam" resultMap="SearchResultMap"
+		parameterType="hashMap">
+		select name, patient_id, sex, age(date_of_birth, create_date) as age
+		from
+		tb_patientinfo
+		<trim prefix="where" prefixOverrides="and|or">
+			<foreach collection="list" item="param">
+				and ${param.paramName}
+				<if test="param.paramValue==null">
+					IS NULL
+				</if>
+				<if test="param.paramValue!=null">
+					= #{param.paramValue}
+				</if>
+			</foreach>
+		</trim>
+	</select>
+
+	<resultMap type="SearchResult" id="SearchResultMap">
+		<id column="id" property="id" />
+		<result column="name" property="patientName" />
+		<result column="age" property="age" />
+		<result column="sex" property="sex" />
+		<result column="xy" property="smokeHis" />
+		<result column="yj" property="alcoholHis" />
+		<result column="patient_id" property="patientId" />
+		<result column="visit_id" property="visitId" />
+	</resultMap>
+
+	<resultMap type="PatientVisit" id="PatientVisitMap">
+		<id column="id" property="id" />
+		<result column="patient_id" property="patientId" />
+		<result column="visit_id" property="visitId" />
+	</resultMap>
+</mapper>

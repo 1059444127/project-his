@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="Tip.css" type="text/css" rel=stylesheet charset="utf-8" />
+<script language="javascript" type="text/javascript" src="Tip.js">
+</script>
+<title>Ajax Demo</title>
+</head>
+
+<body>
+<h3>Ajax下拉提示演示</h3>
+<div id="Exam">测试输入：a、Ajax</div>
+<br />
+
+<input type="text" id="ShowText" onblur="javascript:setTimeout('HideTTip()',300);" 
+    onkeyup="javascript:if ( this.value!=''){ ShowTip(); } else { HideTTip(); }" size="50" autocomplete="off"/>
+
+<input type="button" id="alert" name="alert" value="搜 索" onclick="javascript:if(document.getElementById('ShowText').value!='') {alert('开 始 搜 索: '+document.getElementById('ShowText').value);}"/>
+
+<div id="ShowTip" name="ShowTip" style="overflow: scroll; height: 300px"></div>
+</body>
+</html>

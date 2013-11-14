@@ -1,0 +1,38 @@
+@bgcolor: #ffffff;
+@fontSize: 12px;
+@width: 220px;
+@height: 28px;
+.body{
+	background: @bgcolor;
+	font-size: 12px;
+	color: #666;
+}
+.time{
+	text-align: right;
+	padding-right: 30px;
+	font:italic bold 25px/100px arial,sans-serif;
+}
+.box{
+	width: 500px;
+	height: 350px;
+	margin: 0 auto;
+	position: relative;
+	text-align: center;
+}
+.input{
+	width: @width;
+	height: @height;
+}
+.remember{
+	vertical-align: middle
+}
+.submit{
+	display: inline-block;
+	width: 32px;
+	height: 32px;
+	vertical-align: top;
+	background: url(../imgs/login-hover.png);
+	&:hover{
+		background: url(../imgs/login.png);
+	}
+}

@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="GBK" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn/ac/big/dp/dm/PatientMapper.xml">
+	
+	<select id="selectAllPatientName" resultType="string">
+		select concat(name,"-",patient_id)
+		from tb_patientinfo
+	</select>
+	<select id="selectAllPatient" resultMap="PatientResultMap" parameterType="hashMap">
+		select id, patient_id, name, sex, date_of_birth, create_date, operator_name, phone_number_home, charge_type
+		from tb_patientinfo
+		<if test="patient!=null">
+			<trim prefix="where" prefixOverrides="and">
+				<if test="patient.patientName!=null">
+					<if test="patient.patientName!=''">
+						name=#{patient.patientName}
+					</if>
+				</if>
+				<if test="patient.sex!=null">
+					<if test="patient.sex!=''">
+						and sex=#{patient.sex}
+					</if>
+				</if>
+				<if test="patient.patientId!=null">
+					<if test="patient.patientId!=''">
+						and patient_id=#{patient.patientId}
+					</if>
+				</if>
+			</trim>
+		</if>
+		limit #{fromIndex},#{pageSize}
+	</select>
+	<select id="selectCountPatient" resultType="Integer" parameterType="Patient">
+		select count(*) from tb_patientinfo
+			<trim prefix="where" prefixOverrides="and">
+				<if test="patientName!=null">
+					<if test="patientName!=''">
+						name=#{patientName}
+					</if>
+				</if>
+				<if test="sex!=null">
+					<if test="sex!=''">
+						and sex=#{sex}
+					</if>
+				</if>
+				<if test="patientId!=null">
+					<if test="patientId!=''">
+						and patient_id=#{patientId}
+					</if>
+				</if>
+			</trim>
+	</select>
+	
+	<insert id="savePatient" parameterType="Patient">
+		insert into tb_patientinfo(id,patient_id,name,sex,date_of_birth,marital_status,nation,charge_type,mailing_address,zip_code,phone_number_home,phone_number_business,next_of_kin,next_of_kin_phone,next_of_kin_addr,identity)
+		values(#{id},#{patientId},#{patientName},#{sex},#{birthday},#{maritalStatus},#{nation},#{chargeType},#{mailAddress},#{zipCode},#{phoneNumberHome},#{phoneNumberBussness},#{nextOfKin},#{nextOfKinPhone},#{nextOfKinAddr},#{identity})
+	</insert>
+	
+	<insert id="savePatientVisit" parameterType="hashMap">
+		insert into tb_patvisit(id, patient_id, visit_id, dept_discharge_from, attending_doctor, admission_date_time, patient_class, admission_cause, consulting_doctor)
+		values(#{visit.id},#{patientId},#{visit.visitId},#{visit.deptDischargeFrom},#{visit.attendingDoctor},#{visit.admissionDateTime},#{visit.patientClass},#{visit.admissionCause},#{visit.consultingDoctor})
+	</insert>
+	
+	<insert id="saveMainTestItem" parameterType="hashMap">
+		insert into tb_labmasterinfo(id,test_no,execute_date, patient_id, visit_id, specimen, subject)
+		values
+		<foreach collection="list" item="mainItem" separator="," >
+			(#{mainItem.id},#{mainItem.testNo},#{mainItem.executeTime},#{mainItem.patientId},#{mainItem.visitId},#{mainItem.specimen},#{mainItem.subject})
+		</foreach>
+	</insert>
+	<insert id="saveSubTestItem" parameterType="hashMap">
+		insert into tb_labresultinfo(id, result_date_time, test_no,report_item_name,result)
+		values
+		<foreach collection="list" item="mainItem" separator=",">
+			<foreach collection="mainItem.subItemList" item="subItem" separator=",">
+				(#{subItem.id}, #{subItem.resultDateTime}, #{subItem.examNo},#{subItem.reportItemName},#{subItem.result})
+			</foreach>
+		</foreach>
+	</insert>
+	<insert id="saveSubLabItem" parameterType="hashMap">
+		insert into tb_labitem(id, patient_id, visit_id, report_item_name, subject, result, item)
+		values
+		<foreach collection="list" item="mainItem" separator=",">
+			<foreach collection="mainItem.subItemList" item="subItem" separator=",">
+				(#{subItem.id},#{mainItem.patientId},#{mainItem.visitId},#{subItem.reportItemName},#{mainItem.subject}, #{subItem.result}, #{subItem.examItem})
+			</foreach>
+		</foreach>
+	</insert>
+	<insert id="saveExamItem" parameterType="hashMap">
+		insert into tb_examitem(id, patient_id, visit_id, report_item_name, subject, result, item)
+		values
+		<foreach collection="list" item="mainItem" separator=",">
+			<foreach collection="mainItem.subItemList" item="subItem" separator=",">
+				(#{subItem.id},#{mainItem.patientId},#{mainItem.visitId},#{subItem.reportItemName},#{mainItem.subject}, #{subItem.result}, #{subItem.examItem})
+			</foreach>
+		</foreach>
+	</insert>
+	<insert id="saveMainExamItem" parameterType="hashMap">
+		insert into tb_exammasterinfo(id, exam_no, report_date_time, patient_id, visit_id, exam_class)
+		values
+		<foreach collection="list" item="mainItem" separator=",">
+			(#{mainItem.id},#{mainItem.testNo},#{mainItem.executeTime}, #{mainItem.patientId}, #{mainItem.visitId},#{mainItem.subject})
+		</foreach>
+	</insert>
+	<insert id="saveSubExamItem" parameterType="hashMap">
+		insert into tb_examresultinfo(id, exam_no, exam_item, impression, result_date_time)
+		values
+		<foreach collection="list" item="mainItem" separator=",">
+			<foreach collection="mainItem.subItemList" item="subItem" separator=",">
+				(#{subItem.id},#{subItem.examNo},#{subItem.reportItemName},#{subItem.result},#{subItem.resultDateTime})
+			</foreach>
+		</foreach>
+	</insert>
+	<insert id="saveDiagItem" parameterType="hashMap">
+		insert into tb_diagnosisinfo(id,patient_id,visit_id,diagnosis_desc,diagnosis_value,diagnosis_date,subject)
+		values
+		<foreach collection="list" item="diag" separator=",">
+			(#{diag.id},#{diag.patient_id},#{diag.visit_id},#{diag.diagnosis_desc},#{diag.diagnosis_value},#{diag.diagnosis_date},#{diag.subject})
+		</foreach>
+	</insert>
+	
+	<select id="selectPatientByParam" resultMap="PatientResultMap" parameterType="hashMap">
+		select t1.*, 
+			   t2.id as vid, 
+			   t2.visit_id, 
+			   t2.admission_date_time,
+			   t2.dept_discharge_from,
+			   t2.dept_admission_to,
+			   t2.discharge_date_time,
+			   t2.patient_class,
+			   t2.admission_cause,
+			   t2.consulting_doctor,
+			   t2.attending_doctor
+		from tb_patientinfo as t1 LEFT JOIN tb_patvisit as t2 
+		on t1.patient_id = t2.patient_id
+		where t1.${paramName} = #{paramValue}
+	</select>
+	
+	<resultMap type="PatientVisit" id="PatientVisitMap">
+		<id column="id" property="id"/>
+		<result column="patient_id" property="patientId"/>
+		<result column="visit_id" property="visitId"/>
+	</resultMap>
+	
+	<select id="selectPatientVisitByParam" resultMap="PatientVisitMap" parameterType="hashMap">
+		select id, patient_id, visit_id
+		from v_patvisit_info
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="condition.value1!=''">
+				<choose>
+					<when test="condition.operator=='gt'">
+						and ${condition.fieldNameEn} >
+						#{condition.value1}+0
+					</when>
+					<when test="condition.operator=='nlt'">
+						and ${condition.fieldNameEn} >=
+						#{condition.value1}+0
+					</when>
+					<when test="condition.operator == 'eq'">
+						and ${condition.fieldNameEn} =
+						#{condition.value1}+0
+					</when>
+					<when test="condition.operator == 'lt'">
+						and ${condition.fieldNameEn} <![CDATA[<]]>
+						#{condition.value1}+0
+					</when>
+					<when test="condition.operator == 'ngt'">
+						and ${condition.fieldNameEn} <![CDATA[<]]>=
+						#{condition.value1}+0
+					</when>
+					<when test="condition.operator=='date_gt'">
+						and ${condition.fieldNameEn} >
+						#{condition.value1}+0
+					</when>
+					<when test="condition.operator=='date_lt'">
+						and ${condition.fieldNameEn} <![CDATA[<]]>
+						#{condition.value1}
+					</when>
+					<when test="condition.operator == 'date_eq'">
+						and ${condition.fieldNameEn} =
+						#{condition.value1}
+					</when>
+					<when test="condition.operator == 'string_eq'">
+						and ${condition.fieldNameEn} =
+						#{condition.value1}
+					</when>
+					<when test="condition.operator == 'string_lk'">
+						and ${condition.fieldNameEn} like
+						'%${condition.value1}%' </when>
+					<when test="condition.operator == 'count_1'">
+						and ${condition.fieldNameEn} =
+						#{condition.value1}
+					</when>
+					<when test="condition.operator == 'count_m'">
+						and ${condition.fieldNameEn} in
+						<foreach collection="condition.value1s" item="value" open="(" close=")" separator=",">
+							#{value}
+						</foreach>
+					</when>
+					<when test="condition.operator == 'normal'">
+						and ${condition.fieldNameEn} = 1
+					</when>
+					<when test="condition.operator == 'unnormal'">
+						and ${condition.fieldNameEn} = 0
+					</when>
+					<when test="condition.operator == 'sex_m'">
+						and ${condition.fieldNameEn} ='男'
+					</when>
+					<when test="condition.operator == 'sex_f'">
+						and ${condition.fieldNameEn} ='女'
+					</when>
+					<when test="condition.operator == 'judge_yes'">
+						and ${condition.fieldNameEn} = 1
+					</when>
+					<when test="condition.operator == 'judge_no'">
+						and ${condition.fieldNameEn} = 0
+					</when>
+					<when test="condition.value2!=''">
+						<if test="condition.operator == 'region'">
+							and ${condition.fieldNameEn} between #{condition.value1}+0 and #{condition.value2}+0
+						</if>
+						<if test="condition.operator == 'date_region'">
+							and ${condition.fieldNameEn} between #{condition.value1} and #{condition.value2}
+						</if>
+					</when>
+				</choose>
+			</if>
+		</trim>
+	</select>
+	
+	<delete id="deletePatientInfo" parameterType="String">
+		delete from tb_patientinfo
+		where patient_id = #{patientId}
+	</delete>
+	
+	<delete id="deletePatientVisitInfo" parameterType="HashMap">
+		delete from tb_patvisit
+		where patient_id = #{patientId}
+		<if test="visitId!=null">
+			and visit_id = #{visitId}
+		</if>
+	</delete>
+	
+	<delete id="deletePatientTestInfo" parameterType="HashMap">
+		<if test="visitId!=null">
+			<![CDATA[  
+    			{call p_delete_test_pv(#{patientId},#{visitId})}  
+			]]>  
+		</if>
+		<if test="visitId==null">
+			<![CDATA[  
+    			{call p_delete_test(#{patientId})}
+			]]> 
+		</if>
+	</delete>
+	
+	<delete id="deletePatientExamInfo" parameterType="HashMap">
+		<if test="visitId!=null">
+			<![CDATA[  
+				{call p_delete_exam_pv(#{patientId},#{visitId})}
+			]]>
+		</if>
+		<if test="visitId==null">
+			<![CDATA[  
+				{call p_delete_exam(#{patientId})}
+			]]>
+		</if>
+	</delete>
+	
+	<delete id="deleteDiagInfo" parameterType="HashMap">
+		delete from tb_diagnosisinfo
+		where patient_id = #{patientId}
+		<if test="visitId!=null">
+			and visit_id = #{visitId}
+		</if>
+	</delete>
+	
+	<delete id="deleteDrugInfo" parameterType="HashMap">
+		delete from tb_druginfo
+		where patientid = #{patientId}
+		<if test="visitId!=null">
+			and visitid = #{visitId}
+		</if>
+	</delete>
+	<select id="selectPatientVisitByDiag" resultMap="PatientVisitMap" parameterType="hashMap">
+		select id, patient_id, visit_id
+		from tb_diagnosisinfo
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="condition.value1!=''">
+				<choose>
+					<when test="condition.operator == 'judge_yes'">
+						and ${condition.fieldNameEn} like '%${condition.fieldName}%'
+					</when>
+					<when test="condition.operator == 'judge_include'">
+						and ${condition.fieldNameEn} = #{condition.fieldName}
+						and diagnosis_value = #{condition.value1}
+					</when>
+				</choose>
+			</if>
+		</trim>
+	</select>
+	
+	<resultMap type="Patient" id="PatientResultMap">
+		<id column="id" property="id" />
+		<result column="patient_id" property="patientId"/>
+		<result column="name" property="patientName" />
+		<result column="sex" property="sex"/>
+		<result column="date_of_birth" property="birthday" />
+		<result column="nation" property="nation" />
+		<result column="identity" property="identity"/>
+		<result column="mailing_address" property="mailAddress"/>
+		<result column="phone_number_business" property="phoneNumberBussness" />
+		<result column="next_of_kin" property="nextOfKin" />
+		<result column="next_of_kin_phone" property="nextOfKinPhone"/>
+		<result column="operator_name" property="operatorName"/>
+		<result column="marital_status" property="maritalStatus"/>
+		<result column="citizenship" property="citizenship"/>
+		<result column="id_no" property="IdNo"/>
+		<result column="charge_type" property="chargeType"/>
+		<result column="unit_in_contract" property="unitInContract"/>
+		<result column="zip_code" property="zipCode"/>
+		<result column="phone_number_home" property="phoneNumberHome"/>
+		<result column="mobile_number" property="mobileNumber"/>
+		<result column="email_address" property="emailAddress"/>
+		<result column="last_visit_date" property="lastVisitDate"/>
+		<result column="vip_indicator" property="vipIndicator"/>
+		<result column="create_date" property="createDate"/>
+		<result column="birth_place" property="birthPlace"/>
+		<collection property="visitList" ofType="Visit" resultMap="VisitMap"/>
+	</resultMap>
+	<resultMap type="Visit" id="VisitMap">
+		<id column="vid" property="id" />
+		<result column="visit_id" property="visitId" />
+		<result column="patient_id" property="patientId"/>
+		<result column="name" property="patientName"/>
+		<result column="admission_date_time" property="admissionDateTime"/>
+		<result column="dept_admission_to" property="admissionTo"/>
+		<result column="dept_discharge_from" property="deptDischargeFrom"/>
+		<result column="discharge_date_time" property="dischargeDateTime"/>
+		<result column="patient_class" property="patientClass"/>
+		<result column="admission_cause" property="admissionCause"/>
+		<result column="consulting_doctor" property="consultingDoctor"/>
+		<result column="attending_doctor" property="attendingDoctor"/>
+	</resultMap>
+</mapper>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn/ac/big/dp/dm/SubItemInfoMapper.xml">
+
+	<select id="">
+		select patient_id, visitId
+		from tb_labmasterinfo
+	</select>
+	<resultMap type="PV" id="pvResult">
+		<result column="patient_id" property="patientId"/>
+		<result column="visit_id" property="visitId"/>
+	</resultMap>
+	
+</mapper>
