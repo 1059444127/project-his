@@ -54,6 +54,7 @@ public class BioAction extends ActionSupport {
 				bioList.add(bi);
 			}
 		}
+		bufferedReader.close();
 		return SUCCESS;
 	}
 	public String getChoromsome() {

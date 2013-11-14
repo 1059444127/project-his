@@ -152,7 +152,7 @@ public class SearchAction extends ActionSupport {
 	}
 
 	@SuppressWarnings("unchecked")
-	public String queryTestInfo() throws Exception {
+	public String queryTestInfo(){
 		
 		HttpSession session = ServletActionContext.getRequest().getSession();
 		String requestPath = "http://"
@@ -189,9 +189,9 @@ public class SearchAction extends ActionSupport {
 		System.out.println(page);
 		patVisitList = patVisitList.subList(page.getRowFrom(), page.getRowTo()+1);
 		page.setLinkHref(requestPath);
-		testResultList = testSearchService.searchTestResultByCondition(patVisitList, condList, simpleSearch);
-		session.setAttribute("testResultList", testResultList);
-		throw new Exception();
+		testResultList = testSearchService.searchTestResultByCondition(patVisitList);
+		//session.setAttribute("testResultList", testResultList);
+		return SUCCESS;
 	}
 
 	public String deleteCondition() {
@@ -232,8 +232,8 @@ public class SearchAction extends ActionSupport {
 		}
 		patVisitList = patVisitList.subList(page.getRowFrom(), page.getRowTo()+1);
 		page.setLinkHref(requestPath);
-		testResultList = testSearchService.searchTestResultByCondition(patVisitList, condList, simpleSearch);
-		session.setAttribute("testResultList", testResultList);
+		testResultList = testSearchService.searchTestResultByCondition(patVisitList);
+		//session.setAttribute("testResultList", testResultList);
 		return SUCCESS;
 	}
 

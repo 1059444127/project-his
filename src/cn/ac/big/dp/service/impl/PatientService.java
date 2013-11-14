@@ -12,6 +12,7 @@ import cn.ac.big.dp.bean.Item;
 import cn.ac.big.dp.bean.Patient;
 import cn.ac.big.dp.bean.SubItemInfo;
 import cn.ac.big.dp.bean.Visit;
+import cn.ac.big.dp.dao.INormalDiagnoseDao;
 import cn.ac.big.dp.dao.IPatientDao;
 import cn.ac.big.dp.service.IPatientService;
 import cn.ac.big.dp.test.UUID;
@@ -21,6 +22,7 @@ import cn.ac.big.dp.util.SystemContext;
 public class PatientService implements IPatientService {
 
 	private IPatientDao patientDao;
+	private INormalDiagnoseDao normalDiagnoseDao;
 
 	public Patient selectPatientByPatientId(String patientId) {
 		return patientDao.selectPatientByParam("patient_id", patientId);
@@ -67,6 +69,9 @@ public class PatientService implements IPatientService {
 			if (result == null || result.getSubject() == null) {
 				it.remove();
 			} else {
+				if(result.getDiagnosis_value()==null || "".equals(result.getDiagnosis_value().trim())) {
+					result.setDiagnosis_value("1");
+				}
 				result.setId(UUID.create());
 				result.setPatient_id(patientId);
 				result.setVisit_id(visitId);
@@ -221,7 +226,12 @@ public class PatientService implements IPatientService {
 		int flag3 = patientDao.deletePatientExamInfo(patientId, visitId);
 		int flag4 = patientDao.deletePatientDiagInfo(patientId, visitId);
 		int flag5 = patientDao.deletePatientDrugInfo(patientId, visitId);
+		normalDiagnoseDao.removeNormalDiagnose(patientId);
 		return flag0 + flag1 + flag2 + flag3 + flag4 + flag5;
+	}
+
+	public void setNormalDiagnoseDao(INormalDiagnoseDao normalDiagnoseDao) {
+		this.normalDiagnoseDao = normalDiagnoseDao;
 	}
 
 }

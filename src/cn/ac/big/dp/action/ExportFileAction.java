@@ -19,11 +19,13 @@ import org.apache.struts2.ServletActionContext;
 import cn.ac.big.dp.bean.Diagnose;
 import cn.ac.big.dp.bean.Dict;
 import cn.ac.big.dp.bean.Drug;
+import cn.ac.big.dp.bean.PatientVisit;
 import cn.ac.big.dp.bean.SQLCondition;
 import cn.ac.big.dp.bean.SearchResult;
 import cn.ac.big.dp.bean.SubItemInfo;
 import cn.ac.big.dp.service.IDiagnoseService;
 import cn.ac.big.dp.service.ISubItemInfoService;
+import cn.ac.big.dp.service.ITestService;
 import cn.ac.big.dp.service.impl.DictService;
 import cn.ac.big.dp.service.impl.DrugService;
 import cn.ac.big.dp.util.ChartKV;
@@ -40,6 +42,8 @@ public class ExportFileAction extends ActionSupport{
 	private static final long serialVersionUID = 1L;
 	private ISubItemInfoService subItemInfoService;
 	private IDiagnoseService diagnoseService;
+	private ITestService testService;
+	
 	private String[] fieldNames;
 	private String fileName;
 	private ExcelUtils excelUtils;
@@ -54,14 +58,17 @@ public class ExportFileAction extends ActionSupport{
 	private int drugFlag;
 	private int excelType;
 	
+	@SuppressWarnings("unchecked")
 	public InputStream getInputStream()
 	{
 		Workbook wb = null;
 		ByteArrayInputStream  bais = null;
 		excelUtils.initMap(exportType);
+		List<PatientVisit> patVisitList = null;
+		
 		if(exportType==0){
-			@SuppressWarnings("unchecked")
-			List<SearchResult> testResultList = (List<SearchResult>) ServletActionContext.getRequest().getSession().getAttribute("testResultList");
+			patVisitList = (List<PatientVisit>) ServletActionContext.getRequest().getSession().getAttribute("patVisit");
+			List<SearchResult> testResultList = testService.searchTestResultByCondition(patVisitList);
 			try {
 				wb = excelUtils.createWorkbookByFixedList(testResultList, fieldNames);
 			} catch (Exception e) {
@@ -253,5 +260,9 @@ public class ExportFileAction extends ActionSupport{
 	}
 	public void setDictService(DictService dictService) {
 		this.dictService = dictService;
+	}
+
+	public void setTestService(ITestService testService) {
+		this.testService = testService;
 	}
 }

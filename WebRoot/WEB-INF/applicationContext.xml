@@ -55,6 +55,9 @@
     </bean> 
 	
 	<!-- Dao -->
+	<bean id="normalDiagnoseDao" class="cn.ac.big.dp.dao.impl.NormalDiagnoseDao" scope="singleton">
+		<property name="sqlSessionTemplate" ref="sqlSessionTemplate" />
+	</bean>
 	<bean id="userDao" class="cn.ac.big.dp.dao.impl.UserDao" scope="singleton">
 		<property name="sqlSessionTemplate" ref="sqlSessionTemplate" />
 	</bean>
@@ -96,6 +99,7 @@
 	<bean id="testSearchService" class="cn.ac.big.dp.service.impl.TestSearchService" scope="prototype">
 		<property name="testResultDao" ref="testResultDao" />
 		<property name="dictDao" ref="dictDao" />
+		<property name="normalDiagnoseDao" ref="normalDiagnoseDao" />
 	</bean>
 	<bean id="conditionService" class="cn.ac.big.dp.service.impl.ConditionService" scope="prototype">
 		<property name="conditionDao" ref="conditionDao" />
@@ -155,6 +159,7 @@
 	<bean id="exportFileAction" class="cn.ac.big.dp.action.ExportFileAction" scope="prototype">
 		<property name="excelUtils" ref="excelUtil"/>
 		<property name="subItemInfoService" ref="subItemInfoService"/>
+		<property name="testService" ref="testSearchService"/>
 		<property name="diagnoseService" ref="diagnoseService"/>
 		<property name="dictService" ref="dictService" />
 		<property name="drugService" ref="drugService"/>

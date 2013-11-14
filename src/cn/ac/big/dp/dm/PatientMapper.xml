@@ -286,19 +286,120 @@
 		select id, patient_id, visit_id
 		from tb_diagnosisinfo
 		<trim prefix="where" prefixOverrides="and|or">
+			and diagnosis_desc = #{condition.fieldName}
 			<if test="condition.value1!=''">
 				<choose>
-					<when test="condition.operator == 'judge_yes'">
-						and ${condition.fieldNameEn} like '%${condition.fieldName}%'
+					<when test="condition.operator=='gt'">
+						and diagnosis_value >
+						#{condition.value1}+0
+					</when>
+					<when test="condition.operator=='nlt'">
+						and diagnosis_value >=
+						#{condition.value1}+0
+					</when>
+					<when test="condition.operator == 'eq'">
+						and diagnosis_value =
+						#{condition.value1}+0
+					</when>
+					<when test="condition.operator == 'lt'">
+						and diagnosis_value <![CDATA[<]]>
+						#{condition.value1}+0
+					</when>
+					<when test="condition.operator == 'ngt'">
+						and diagnosis_value <![CDATA[<]]>=
+						#{condition.value1}+0
+					</when>
+					<when test="condition.operator=='date_gt'">
+						and diagnosis_value >
+						#{condition.value1}+0
+					</when>
+					<when test="condition.operator=='date_lt'">
+						and diagnosis_value <![CDATA[<]]>
+						#{condition.value1}+0
+					</when>
+					<when test="condition.operator == 'date_eq'">
+						and diagnosis_value =
+						#{condition.value1}+0
+					</when>
+					<when test="condition.operator == 'string_eq'">
+						and diagnosis_value =
+						#{condition.value1}
+					</when>
+					<when test="condition.operator == 'string_lk'">
+						and diagnosis_value like
+						'%#{condition.value1}%' </when>
+					<when test="condition.operator == 'count_1'">
+						and diagnosis_value =
+						#{condition.value1}+0
+					</when>
+					<when test="condition.operator == 'count_m'">
+						and diagnosis_value in
+						<foreach collection="condition.value1s" index="value"
+							open="(" close=")" separator=",">
+							#{value}
+						</foreach>
+					</when>
+					<when test="condition.operator == 'normal'">
+						and diagnosis_value = 1
+					</when>
+					<when test="condition.operator == 'unnormal'">
+						and diagnosis_value = 0
+					</when>
+					<when test="condition.operator == 'sex_m'">
+						and diagnosis_value = 1
+					</when>
+					<when test="condition.operator == 'sex_f'">
+						and diagnosis_value = 0
 					</when>
 					<when test="condition.operator == 'judge_include'">
-						and ${condition.fieldNameEn} = #{condition.fieldName}
 						and diagnosis_value = #{condition.value1}
+					</when>
+					<when test="condition.value2!=''">
+						<if test="condition.operator == 'region'">
+							and diagnosis_value between #{condition.value1}+0 and
+							#{condition.value2}+0
+						</if>
+						<if test="condition.operator == 'date_region'">
+							and diagnosis_value between #{condition.value1} and
+							#{condition.value2}
+						</if>
 					</when>
 				</choose>
 			</if>
 		</trim>
 	</select>
+	
+	<select id="selectNormalDiagnose" parameterType="hashMap" resultMap="NormalDiagnoseMap">
+		select *
+		from tb_normal_diagnose
+		<trim prefix="where" prefixOverrides="and|or">
+			<foreach collection="list" item="param">
+				and ${param.paramName} = #{param.paramValue}
+			</foreach>		
+		</trim>
+	</select>
+	
+	<insert id="insertNormalDiagnose" parameterType="NormalDiagnose">
+		insert into tb_normal_diagnose(patient_id, visit_id, bmi, push_pressure, flat_pressure, height, weight, heart_rate)
+		values(#{patientId},#{visitId},#{bmi},#{height},#{weight},#{"pushPressure"},#{flatPressure},#{heartRate})
+	</insert>
+	
+	<delete id="deleteNormalDiagnose" parameterType="Integer">
+		delete from tb_normal_diagnose
+		where id = #{id}
+	</delete>
+	
+	<resultMap type="NormalDiagnose" id="NormalDiagnoseMap">
+		<id column="id" property="id"/>
+		<result column="patient_id" property="patientId"/>
+		<result column="visit_id" property="visitId" />
+		<result column="BMI" property="bmi"/>
+		<result column="height" property="height"/>
+		<result column="weight" property="weight"/>
+		<result column="push_pressure" property="pushPressure"/>
+		<result column="flat_pressure" property="flatPressure"/>
+		<result column="heart_rate" property="heartRate"/>
+	</resultMap>
 	
 	<resultMap type="Patient" id="PatientResultMap">
 		<id column="id" property="id" />

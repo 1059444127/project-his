@@ -50,7 +50,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<thead>
 				<tr>
 					<th></th>
-					<th colspan="6" style="text-align:center;font-size:14px">病人基本信息</th>
+					<th colspan="12" style="text-align:center;font-size:14px">病人基本信息</th>
 					<s:iterator value="dictList" id="dict" status="index">
 						<th style="text-align:center;font-size:14px" colspan="<s:property value='#dict.subDict.size()'/>"><s:property value="#dict.dictName"/></th>
 					</s:iterator>
@@ -63,6 +63,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<th style="font-size:14px" onclick="displayColumn(this,1)">病次ID<a class="close">×</a></th>
 					<th style="font-size:14px" onclick="displayColumn(this,1)">性别<a class="close">×</a></th>
 					<th style="font-size:14px" onclick="displayColumn(this,1)">年龄<a class="close">×</a></th>
+					<th style="font-size:14px" onclick="displayColumn(this,1)">身高<a class="close">×</a></th>
+					<th style="font-size:14px" onclick="displayColumn(this,1)">体重<a class="close">×</a></th>
+					<th style="font-size:14px" onclick="displayColumn(this,1)">BMI<a class="close">×</a></th>
+					<th style="font-size:14px" onclick="displayColumn(this,1)">收缩压<a class="close">×</a></th>
+					<th style="font-size:14px" onclick="displayColumn(this,1)">舒张压<a class="close">×</a></th>
+					<th style="font-size:14px" onclick="displayColumn(this,1)">心率<a class="close">×</a></th>
 					<s:iterator value="dictList" id="ddict" status="ddindex">
 						<s:iterator value="#ddict.subDict" id="subDict">
 							<th align="center" style="font-size:14px" onclick="displayColumn(this,<s:property value='#ddindex.index'/>+2)"><s:property value="#subDict.dictName"/><a class="close">×</a></th>
@@ -80,6 +86,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<td style="text-align:center;vertical-align:middle"><s:property value="#result.visitId"/></td>
 						<td style="text-align:center;vertical-align:middle"><s:property value="#result.sex"/></td>
 						<td style="text-align:center;vertical-align:middle"><s:property value="#result.age"/></td>
+						<td style="text-align:center;vertical-align:middle"><s:property value="#result.height"/></td>
+						<td style="text-align:center;vertical-align:middle"><s:property value="#result.weight"/></td>
+						<td style="text-align:center;vertical-align:middle"><s:property value="#result.bmi"/></td>
+						<td style="text-align:center;vertical-align:middle"><s:property value="#result.pushPressure"/></td>
+						<td style="text-align:center;vertical-align:middle"><s:property value="#result.flatPressure"/></td>
+						<td style="text-align:center;vertical-align:middle"><s:property value="#result.heartRate"/></td>
 						<s:iterator value="dictList" id="sdict" status="sdindex">
 							<s:iterator value="#sdict.subDict" id="subDict">
 								<td align="center">
@@ -115,7 +127,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
          <!-- 保存提示框 -->
 		<div id="myModal" class="modal hide fade" style="display: none; width:53%;left:42%">
             <div class="modal-header">
-              <a class="close" data-dismiss="modal">×</a>
+              <a class="close" data-dismiss="modal" style="float:right">×</a>
               <h3>请选择要导出的字段名称</h3>
             </div>
             <div class="modal-body" style="font-size:15px;text-align:">

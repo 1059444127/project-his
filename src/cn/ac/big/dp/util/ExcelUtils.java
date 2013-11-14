@@ -514,6 +514,7 @@ public class ExcelUtils{
 		cell.setCellValue("吸烟史");
 		cell = row.createCell(6);
 		cell.setCellValue("饮酒史");
+		
 		for (String fieldName : fieldNames) {
 			if (fieldName != null && !"".equals(fieldName.trim())) {
 				cell = row.createCell(cellNum++);

@@ -456,7 +456,7 @@ html,body,div,table,td,th,input,tr,span,p,ul,li,a,select {
 			for(var x in subDictList) {
 				subDiagLineHtml += "<option value="+ subDictList[x].dictName +">"+ subDictList[x].dictName +"</option>";
 			}
-			subDiagLineHtml += "</select><label>值:</label><input type='text' class='required' name='diag["+ diagCount +"].diagnosis_value'/></div>";
+			subDiagLineHtml += "</select><label>值:</label><input type='text' name='diag["+ diagCount +"].diagnosis_value'/></div>";
 			subDiagLine.append(subDiagLineHtml);
 			diagCount++;
 		}

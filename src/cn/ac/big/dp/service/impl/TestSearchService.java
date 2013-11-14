@@ -1,17 +1,19 @@
 package cn.ac.big.dp.service.impl;
 
 import java.util.ArrayList;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import cn.ac.big.dp.bean.Condition;
 import cn.ac.big.dp.bean.DResult;
+import cn.ac.big.dp.bean.NormalDiagnose;
 import cn.ac.big.dp.bean.PatientVisit;
 import cn.ac.big.dp.bean.SQLCondition;
 import cn.ac.big.dp.bean.SearchResult;
 import cn.ac.big.dp.bean.TestItem;
 import cn.ac.big.dp.dao.IDictDao;
+import cn.ac.big.dp.dao.INormalDiagnoseDao;
 import cn.ac.big.dp.dao.ITestResultDao;
 import cn.ac.big.dp.service.ITestService;
 
@@ -19,6 +21,7 @@ public class TestSearchService implements ITestService {
 
 	private ITestResultDao testResultDao;
 	private IDictDao dictDao;
+	private INormalDiagnoseDao normalDiagnoseDao;
 
 	/*
 	 * 根据条件查询病人基本信息
@@ -30,10 +33,11 @@ public class TestSearchService implements ITestService {
 	/*
 	 * 根据条件查询符合条件的结果集合
 	 */
-	public List<SearchResult> searchTestResultByCondition(List<PatientVisit> patVisList, List<Condition> condList, int simpleSearch) {
+	public List<SearchResult> searchTestResultByCondition(List<PatientVisit> patVisList) {
 
 		List<SearchResult> resultList = new ArrayList<SearchResult>();
 		SearchResult sr = null;
+		NormalDiagnose normalDiagnose = null;
 		List<SQLCondition> sqlCondList = null;
 		List<TestItem> itemResultList = null;
 		List<TestItem> itemeResultList = null;
@@ -54,9 +58,20 @@ public class TestSearchService implements ITestService {
 
 			// 1.根据patient_id获取病人基本信息
 			sr = testResultDao.selectVPatVisitInfoByParam(sqlCondList);
+			
 			sr.setVisitId(tr.getVisitId());
-
 			sqlCondList.add(vsc);
+			
+			normalDiagnose = normalDiagnoseDao.findOneByParams(sqlCondList);
+			if(normalDiagnose!=null) {
+				sr.setBmi(normalDiagnose.getBmi());
+				sr.setHeight(normalDiagnose.getHeight());
+				sr.setWeight(normalDiagnose.getWeight());
+				sr.setPushPressure(normalDiagnose.getPushPressure());
+				sr.setFlatPressure(normalDiagnose.getFlatPressure());
+				sr.setHeartRate(normalDiagnose.getHeartRate());
+			}
+
 
 			// 3.获取病人对应的所有检验小项值
 			itemResultList = testResultDao.searchTestResult(sqlCondList);
@@ -106,11 +121,13 @@ public class TestSearchService implements ITestService {
 
 	public List<SearchResult> getResult(List<Condition> condList, boolean flag,
 			int simpleSearch) {
-		List<PatientVisit> patVisitList = this.searchPatientVisit(condList,
-				simpleSearch);
-		List<SearchResult> testResultList = this.searchTestResultByCondition(
-				patVisitList, condList, simpleSearch);
+		List<PatientVisit> patVisitList = this.searchPatientVisit(condList,simpleSearch);
+		List<SearchResult> testResultList = this.searchTestResultByCondition(patVisitList);
 		return testResultList;
+	}
+
+	public void setNormalDiagnoseDao(INormalDiagnoseDao normalDiagnoseDao) {
+		this.normalDiagnoseDao = normalDiagnoseDao;
 	}
 
 }

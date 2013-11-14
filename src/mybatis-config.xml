@@ -27,7 +27,7 @@
 		<typeAlias alias="FastSearchResult" type="cn.ac.big.dp.bean.FastSearchResult" />
 		<typeAlias alias="DiagItemDTO" type="cn.ac.big.dp.bean.DiagItemDTO" />
 		<typeAlias alias="DiagCountDTO" type="cn.ac.big.dp.bean.DiagCountDTO" />
-		
+		<typeAlias alias="NormalDiagnose" type="cn.ac.big.dp.bean.NormalDiagnose" />
 	</typeAliases>
 		
 	
