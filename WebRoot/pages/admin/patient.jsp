@@ -93,6 +93,15 @@ html,body,div,table{
 						<label style="font-weight:bold">姓名:</label>&nbsp;<input type="text" value="${patient.patientName}" name="patient.patientName"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<label style="font-weight:bold">性别:</label>&nbsp;<input type="text" value="${patient.sex}" name="patient.sex"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<label style="font-weight:bold">ID号:</label>&nbsp;<input type="text" value="${patient.patientId}" name="patient.patientId"/>
+						<label style="font-weight:bold">记录类型:</label>&nbsp;
+						<s:if test="patient.addFlag==0">
+							<input type="radio" name="patient.addFlag" value="1">新增
+							<input type="radio" name="patient.addFlag" value="0"  checked="checked">原有
+						</s:if>
+						<s:else>
+							<input type="radio" name="patient.addFlag" value="1" checked="checked">新增
+							<input type="radio" name="patient.addFlag" value="0">原有
+						</s:else>
 						<div style="float:right">
 							<a href="javascript: submit()" class="btn btn-primary">查询</a>
 							<a href="javascript: reset()" class="btn">重置</a>
@@ -131,6 +140,9 @@ html,body,div,table{
 								操作员
 							</th>
 							<th>
+								类型
+							</th>
+							<th>
 								操作
 							</th>
 						</tr>
@@ -164,6 +176,14 @@ html,body,div,table{
 								</td>
 								<td>
 									<s:property value="#patient.operatorName" />
+								</td>
+								<td>
+									<s:if test="#patient.addFlag==1">
+										新增
+									</s:if>
+									<s:else>
+										原有
+									</s:else>
 								</td>
 								<td>
 									<img src="resources/imgs/delete.png" style="cursor:pointer;margin:0px;padding:0px;width:15px;height:15px" onclick="deleteConfirm('<s:property value='#patient.patientId'/>','<s:property value="#patient.patientName" />')"/>

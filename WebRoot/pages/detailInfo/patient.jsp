@@ -898,43 +898,53 @@ html,body,div,table,td,th,input,tr,span,p,ul,li,a,select{
 					var patName = diagList[i].patientName;
 					var sex = diagList[i].sex;
 					var age = diagList[i].age;
-					var operResult = diagList[i].operResult;
-					var operConclusion = diagList[i].operConclusion;
-					var operDate = diagList[i].operDate;
-					var smoke = diagList[i].smoke;
-					var alcohol = diagList[i].alcohol;
-					var curIllness = diagList[i].curIllness;
-					var hisIllness = diagList[i].hisIllness;
-					var perHis = diagList[i].perHis;
-					var familyHis = diagList[i].familyHis;
-					var specialItem = diagList[i].specialItem;
-					var leaveDia = diagList[i].leaveDia;
-					var leaveTips = diagList[i].leaveTips;
+					var jws = diagList[i].jws;
+					var grs = diagList[i].grs;
+					var xys = diagList[i].xys;
+					var yjs = diagList[i].yjs;
+					var xyn = diagList[i].xyn;
+					var jy = diagList[i].jy;
+					var jj = diagList[i].jj;
+					var jzycb = diagList[i].jzycb;
+					var tgjc = diagList[i].tgjc;
+					var cyzd = diagList[i].cyzd;
+					var cyyz = diagList[i].cyyz;
+					
+					var ygbbxz = diagList[i].ygbbxz;
+					var jl = diagList[i].jl;
+					var jzs = diagList[i].jzs;
+					var bbzs = diagList[i].bbzs;
+					var ssjg = diagList[i].ssjg;
+					var ssrq = diagList[i].ssrq;
 					
 					diagnoseInfo.append("<tr><td colspan='10' style='font-size:15px;height:15px;line-height:15px;padding:4px;text-align:center;font-weight:bold;background-color:#DEEDFE'>基本信息</td></tr>");
 					diagnoseInfo.append("<tr><td style='font-size:15px;height:15px;line-height:15px;padding:4px;width:80px;font-weight:bold'>病人姓名</td><td style='font-size:15px;height:15px;line-height:15px;padding:4px;'>"+ 
 					patName +"</td><td style='font-size:15px;height:15px;line-height:15px;padding:4px;width:80px;font-weight:bold'>病人ID</td><td style='font-size:15px;height:15px;line-height:15px;padding:4px;'>"+ 
 					patientId +"</td><td style='font-size:15px;height:15px;line-height:15px;padding:4px;width:80px;font-weight:bold'>性别</td><td style='font-size:15px;height:15px;line-height:15px;padding:4px;'>"+ 
 					sex +"</td><td style='font-size:15px;height:15px;line-height:15px;padding:4px;width:80px;font-weight:bold'>年龄</td><td style='font-size:15px;height:15px;line-height:15px;padding:4px;'>"+ 
-					age +"</td><td style='font-size:15px;height:15px;line-height:15px;padding:4px;width:80px;font-weight:bold'>病次</td><td style='font-size:15px;height:15px;line-height:15px;padding:4px;'>"+ visitId +"</td></tr>");
+					age +"</td><td style='font-size:15px;height:15px;line-height:15px;padding:4px;width:80px;font-weight:bold'>病次</td><td style='font-size:15px;height:15px;line-height:15px;padding:4px;'>"+ 
+					visitId +"</td></tr>");
 					
 					diagnoseInfo.append("<tr><td colspan='10' style='font-size:15px;height:15px;line-height:15px;padding:4px;text-align:center;font-weight:bold;background-color:#DEEDFE'>手术信息</td></tr>");
-					diagnoseInfo.append("<tr><td style='font-size:15px;height:15px;line-height:15px;padding:4px;width:80px;font-weight:bold'>手术日期</td><td colspan='9' style='font-size:15px;height:15px;line-height:15px;padding:4px;'>"+ operDate +"</td></tr>");
-					diagnoseInfo.append("<tr><td style='font-size:15px;height:15px;line-height:15px;padding:4px;width:80px;font-weight:bold'>手术结果</td><td colspan='9' style='font-size:15px;height:15px;line-height:15px;padding:4px;'>"+ operResult +"</td></tr>");
-					diagnoseInfo.append("<tr><td style='font-size:15px;height:15px;line-height:15px;padding:4px;width:80px;font-weight:bold'>结论</td><td colspan='9' style='font-size:15px;height:15px;line-height:15px;padding:4px;'>"+ operConclusion +"</td></tr>");
+					diagnoseInfo.append("<tr><td style='font-size:15px;height:15px;line-height:15px;padding:4px;width:80px;font-weight:bold'>手术日期</td><td colspan='9' style='font-size:15px;height:15px;line-height:15px;padding:4px;'>"+ 
+					ssrq +"</td></tr>");
+					diagnoseInfo.append("<tr><td style='font-size:15px;height:15px;line-height:15px;padding:4px;width:80px;font-weight:bold'>手术结果</td><td colspan='9' style='font-size:15px;height:15px;line-height:15px;padding:4px;'>"+ 
+					jl +"</td></tr>");
+					diagnoseInfo.append("<tr><td style='font-size:15px;height:15px;line-height:15px;padding:4px;width:80px;font-weight:bold'>结论</td><td colspan='9' style='font-size:15px;height:15px;line-height:15px;padding:4px;'>"+ 
+					ssjg +"</td></tr>");
 					
 					diagnoseInfo.append("<tr><td colspan='10' style='font-size:15px;height:15px;line-height:15px;padding:4px;text-align:center;font-weight:bold;background-color:#DEEDFE'>病史信息</td></tr>");
-					diagnoseInfo.append("<tr><td style='font-size:15px;height:15px;line-height:15px;padding:4px;width:80px;font-weight:bold'>吸烟史</td><td colspan='9' style='font-size:15px;height:15px;line-height:15px;padding:4px;'>"+ smoke +"</td></tr>");
-					diagnoseInfo.append("<tr><td style='font-size:15px;height:15px;line-height:15px;padding:4px;width:80px;font-weight:bold'>饮酒史</td><td colspan='9' style='font-size:15px;height:15px;line-height:15px;padding:4px;'>"+ alcohol +"</td></tr>");
-					diagnoseInfo.append("<tr><td style='font-size:15px;height:15px;line-height:15px;padding:4px;width:80px;font-weight:bold'>现病史</td><td colspan='9' style='font-size:15px;height:15px;line-height:15px;padding:4px;'>"+ curIllness +"</td></tr>");
-					diagnoseInfo.append("<tr><td style='font-size:15px;height:15px;line-height:15px;padding:4px;width:80px;font-weight:bold'>既往史</td><td colspan='9' style='font-size:15px;height:15px;line-height:15px;padding:4px;'>"+ hisIllness +"</td></tr>");
-					diagnoseInfo.append("<tr><td style='font-size:15px;height:15px;line-height:15px;padding:4px;width:80px;font-weight:bold'>个人史</td><td colspan='9' style='font-size:15px;height:15px;line-height:15px;padding:4px;'>"+ perHis +"</td></tr>");
-					diagnoseInfo.append("<tr><td style='font-size:15px;height:15px;line-height:15px;padding:4px;width:80px;font-weight:bold'>家族史</td><td colspan='9' style='font-size:15px;height:15px;line-height:15px;padding:4px;'>"+ familyHis +"</td></tr>");
-					diagnoseInfo.append("<tr><td style='font-size:15px;height:15px;line-height:15px;padding:4px;width:80px;font-weight:bold'>化验及特殊检查</td><td colspan='9' style='font-size:15px;height:15px;line-height:15px;padding:4px;'>"+ specialItem +"</td></tr>");
+					diagnoseInfo.append("<tr><td style='font-size:15px;height:15px;line-height:15px;padding:4px;width:80px;font-weight:bold'>吸烟史</td><td colspan='9' style='font-size:15px;height:15px;line-height:15px;padding:4px;'>"+ xys +"</td></tr>");
+					diagnoseInfo.append("<tr><td style='font-size:15px;height:15px;line-height:15px;padding:4px;width:80px;font-weight:bold'>饮酒史</td><td colspan='9' style='font-size:15px;height:15px;line-height:15px;padding:4px;'>"+ yjs +"</td></tr>");
+					diagnoseInfo.append("<tr><td style='font-size:15px;height:15px;line-height:15px;padding:4px;width:80px;font-weight:bold'>体格检查</td><td colspan='9' style='font-size:15px;height:15px;line-height:15px;padding:4px;'>"+ tgjc +"</td></tr>");
+					diagnoseInfo.append("<tr><td style='font-size:15px;height:15px;line-height:15px;padding:4px;width:80px;font-weight:bold'>既往史</td><td colspan='9' style='font-size:15px;height:15px;line-height:15px;padding:4px;'>"+ jws +"</td></tr>");
+					diagnoseInfo.append("<tr><td style='font-size:15px;height:15px;line-height:15px;padding:4px;width:80px;font-weight:bold'>个人史</td><td colspan='9' style='font-size:15px;height:15px;line-height:15px;padding:4px;'>"+ grs +"</td></tr>");
+					diagnoseInfo.append("<tr><td style='font-size:15px;height:15px;line-height:15px;padding:4px;width:80px;font-weight:bold'>家族史</td><td colspan='9' style='font-size:15px;height:15px;line-height:15px;padding:4px;'>"+ jzs +"</td></tr>");
+					diagnoseInfo.append("<tr><td style='font-size:15px;height:15px;line-height:15px;padding:4px;width:80px;font-weight:bold'>家族遗传病</td><td colspan='9' style='font-size:15px;height:15px;line-height:15px;padding:4px;'>"+ jzycb +"</td></tr>");
 					
 					diagnoseInfo.append("<tr><td colspan='10' style='font-size:15px;height:15px;line-height:15px;padding:4px;text-align:center;font-weight:bold;background-color:#DEEDFE'>出院信息</td></tr>");
-					diagnoseInfo.append("<tr><td style='font-size:15px;height:15px;line-height:15px;padding:4px;width:80px;font-weight:bold'>出院诊断</td><td colspan='9' style='font-size:15px;height:15px;line-height:15px;padding:4px;'>"+ leaveDia +"</td></tr>");
-					diagnoseInfo.append("<tr><td style='font-size:15px;height:15px;line-height:15px;padding:4px;width:80px;font-weight:bold'>出院医嘱</td><td colspan='9' style='font-size:15px;height:15px;line-height:15px;padding:4px;'>"+ leaveTips +"</td></tr>");
+					diagnoseInfo.append("<tr><td style='font-size:15px;height:15px;line-height:15px;padding:4px;width:80px;font-weight:bold'>出院诊断</td><td colspan='9' style='font-size:15px;height:15px;line-height:15px;padding:4px;'>"+ cyzd +"</td></tr>");
+					diagnoseInfo.append("<tr><td style='font-size:15px;height:15px;line-height:15px;padding:4px;width:80px;font-weight:bold'>出院医嘱</td><td colspan='9' style='font-size:15px;height:15px;line-height:15px;padding:4px;'>"+ cyyz +"</td></tr>");
 				}
 			}
 			$("#ReportInfo").modal("show");
