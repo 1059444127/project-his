@@ -99,6 +99,11 @@
 				<param name="actionName">patient_findPatientPager</param>
 			</result>
 		</action>
+		<action name="patient_deleteDiagInfo" class="patientAction" method="deleteDiagInfo">
+			<result type="redirectAction">
+				<param name="actionName">patient_findDiagItemPager.action</param>
+			</result>
+		</action>
 		<action name="patient_*" class="patientAction" method="{1}">
 			<result name="success">/pages/detailInfo/patient.jsp</result>
 		</action>

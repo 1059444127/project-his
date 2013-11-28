@@ -48,6 +48,7 @@ public class PatientAction extends ActionSupport{
 	private List<Visit> visitList = new ArrayList<Visit>();
 	List<DiagItemDTO> diagItemList = new ArrayList<DiagItemDTO>();
 	private int isFirstSerachFlag;
+	private String id;
 	
 	private Visit visit;
 	private int checkType;
@@ -305,6 +306,11 @@ public class PatientAction extends ActionSupport{
 		return SUCCESS;
 	}
 	
+	public String deleteDiagInfo() {
+		this.patientService.deleteDiagnose(id);
+		return SUCCESS;
+	}
+	
 
 	public void setPatientService(IPatientService patientService) {
 		this.patientService = patientService;
@@ -425,6 +431,12 @@ public class PatientAction extends ActionSupport{
 	}
 	public DiagItemDTO getDiagItem() {
 		return diagItem;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
 	}
 	public void setDiagItem(DiagItemDTO diagItem) {
 		this.diagItem = diagItem;

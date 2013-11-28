@@ -8,6 +8,10 @@
 		limit 0,1
 	</select>
 	
+	<delete id="deleteDiagInfoById" parameterType="String">
+		delete from tb_diagnosisinfo where id = #{id}
+	</delete>
+	
 	<update id="updateDiagByParam" parameterType="DResult">
 		update tb_diagnosisinfo set diagnosis_desc = #{diagnosis_desc}, 
 									diagnosis_date = #{diagnosis_date}, 
@@ -106,7 +110,7 @@
 			</trim>
 	</select>
 	<select id="selectDiagItemByParam" parameterType="hashMap" resultType="DiagItemDTO">
-		select patient_id,visit_id,name,diagnosis_desc,diagnosis_value,diagnosis_date, diagnosis_no,treat_days,treat_result,xy,yj from v_diagitem
+		select id, patient_id,visit_id,name,diagnosis_desc,diagnosis_value,diagnosis_date, diagnosis_no,treat_days,treat_result,xy,yj from v_diagitem
 		<if test="diagItem!=null">
 			<trim prefix="where" prefixOverrides="and">
 				<if test="diagItem.patient_id!=null">
@@ -188,6 +192,8 @@
 			<result column="diagnosis_type" property="diagnosis_type"/>
 			<result column="diagnosis_no" property="diagnosis_no"/>
 			<result column="diagnosis_desc" property="diagnosis_desc"/>
+			<result column="diagnosis_value" property="diagnosis_value"/>
+			<result column="subject" property="subject"/>
 			<result column="diagnosis_date" property="diagnosis_date"/>
 			<result column="treat_result" property="treat_result"/>
 			<result column="code_version" property="code_version"/>

@@ -127,4 +127,7 @@ public class PatientDao implements IPatientDao{
 		paramMap.put("visitId", visitId);
 		return getSqlSessionTemplate().delete("deleteDrugInfo", paramMap);
 	}
+	public int deleteDiagInfo(String id) {
+		return getSqlSessionTemplate().delete("deleteDiagInfoById", id);
+	}
 }

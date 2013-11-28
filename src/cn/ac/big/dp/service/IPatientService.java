@@ -21,4 +21,5 @@ public interface IPatientService {
 	public List<String> selectAllPatientName();
 	public List<Visit> selectVisitByPatientId(String patientId);
 	public int deletePatient(String patientId, String visitId);
+	public int deleteDiagnose(String id);
 }

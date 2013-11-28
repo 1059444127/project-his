@@ -184,34 +184,14 @@ html,body,div,table{
 									</s:else>
 								</td>
 								<td>
-									<img src="resources/imgs/delete.png" style="cursor:pointer;margin:0px;padding:0px;width:15px;height:15px" onclick="doModifiy(<s:property value="#visit.patientId" />,<s:property value="#visit.visitId" />, '<s:property value="#visit.patientName" />')"/>
+									<img src="resources/imgs/delete.png" style="cursor:pointer;margin:0px;padding:0px;width:15px;height:15px" onclick=""/>
 								</td>
 							</tr>
 						</s:iterator>
 					</tbody>
 				</table>
 			</div>
-			<!-- 诊断结果列表-->
-         <div id="DiagResultInfo" class="modal hide fade" style="display: none;width:60%;left:42%;top:300px">
-         	<div class="modal-header">
-              <a class="close" data-dismiss="modal">×</a>
-             	<div style="float:left;padding:5px;" class="tab_select">诊断结果</div>
-             	<div style="clear:both"></div>
-            </div>
-            <div class="modal-body">
-            	<div style="width:100%">
-					<table id="diagResultTable" class="table table-bordered" style="width:100%;padding-bottom: 0;padding:0px;">
-						<tbody></tbody>
-					</table>        	
-            	</div>
-            </div>
-            <div class="modal-footer">
-            	<sec:authorize ifAnyGranted="ROLE_USER">
-	            	<a class="btn" href="javascript:update()">更新</a>
-              	</sec:authorize>
-             	<a href="#" class="btn" data-dismiss="modal">关闭</a>
-            </div>
-         </div>
+			
  		<!-- 快速查询提示框 -->
          <div id="fsmyModal" class="modal hide fade" style="display: none; ">
             <div class="modal-header">
@@ -348,53 +328,6 @@ html,body,div,table{
 	}
 	function reset() {
 		window.location.href = "search/patient_findPatientPager.action";
-	}
-	function doModifiy(patientId, visitId, patientName) {
-		var params = {"patientId":patientId,"visitId":visitId};
-		$.ajax({
-			url:'${pageContext.request.scheme}${"://"}${pageContext.request.serverName}${":"}${pageContext.request.serverPort}${pageContext.request.contextPath}${"/"}ajax/item_findDiagnose.action',
-			type:'post',
-			dataType:'json',
-			data:params,
-			success:function(result) {
-				previewDiagnose(result, patientName);
-			}
-		});
-	}
-	function previewDiagnose(data, patientName)  {
-		var diagResult = data.diagResult;
-		$("#DiagResultInfo").modal("show");
-		var table = $("#diagResultTable>tbody");
-		table.html("");
-		if(diagResult==null || diagResult.length==0){
-			table.html("没有诊断结果");
-		} else {
-			var patientid = diagResult.patientid;
-			var visitid = diagResult.visitid;
-			var treatdays = diagResult.treat_days;
-			var dResult = diagResult.diagResult;
-			table.append("<tr><td colspan='8' style='font-size:15px;height:15px;line-height:15px;padding:4px;text-align:center;font-weight:bold;background-color:#DEEDFE'>基础信息</td></tr>");
-			table.append("<tr><td style='font-size:15px;height:15px;line-height:15px;padding:4px;width:80px;font-weight:bold'>病人姓名</td><td style='font-size:15px;height:15px;line-height:15px;padding:4px;'>"+ 
-					patientName +"</td><td style='font-size:15px;height:15px;line-height:15px;padding:4px;width:80px;font-weight:bold'>病人ID</td><td style='font-size:15px;height:15px;line-height:15px;padding:4px;'>"+ 
-					patientid +"</td><td style='font-size:15px;height:15px;line-height:15px;padding:4px;width:80px;font-weight:bold'>病次</td><td style='font-size:15px;height:15px;line-height:15px;padding:4px;'>"+ 
-					visitid +"</td><td style='font-size:15px;height:15px;line-height:15px;padding:4px;width:80px;font-weight:bold'>治疗时间</td><td style='font-size:15px;height:15px;line-height:15px;padding:4px;'>"+ 
-					treatdays +"天</td></tr>");
-			table.append("<tr><td colspan='8' style='font-size:15px;height:15px;line-height:15px;padding:4px;text-align:center;font-weight:bold;background-color:#DEEDFE'>诊断结果</td></tr>");
-			table.append("<tr><td style='font-size:15px;height:15px;line-height:15px;padding:4px;width:80px;font-weight:bold'>序号</td><td colspan='3' style='font-size:15px;height:15px;line-height:15px;padding:4px;width:80px;font-weight:bold'>描述</td> <td style='font-size:15px;height:15px;line-height:15px;padding:4px;width:80px;font-weight:bold' colspan='3'>治愈时间</td><td style='font-size:15px;height:15px;line-height:15px;padding:4px;width:80px;font-weight:bold'>代码</td></tr>");
-			for(var index in dResult){
-				var id = dResult[index].id;
-				var type = dResult[index].diagnosis_type;
-				var desc = dResult[index].diagnosis_desc;
-				var date = dResult[index].diagnosis_date;
-				var code = dResult[index].code_version;
-				table.append("<tr>"+ 
-						id +"</td><td style='font-size:15px;height:15px;line-height:15px;padding:4px;'>"+ 
-						type +"</td><td colspan='3' style='font-size:15px;height:15px;line-height:15px;padding:4px;'>"+ 
-						desc +"</td><td style='font-size:15px;height:15px;line-height:15px;padding:4px;' colspan='3'>"+ 
-						date +"</td><td style='font-size:15px;height:15px;line-height:15px;padding:4px;'>"+ 
-						code +"</td></tr>");
-			}
-		}
 	}
 </script>
 	</body>

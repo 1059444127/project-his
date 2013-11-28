@@ -2,6 +2,7 @@ package cn.ac.big.dp.bean;
 
 public class DiagItemDTO {
 	
+	private String id;
 	private String patient_id;
 	private String visit_id;
 	private String name;
@@ -79,5 +80,10 @@ public class DiagItemDTO {
 	public void setTreat_result(String treat_result) {
 		this.treat_result = treat_result;
 	}
-	
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
 }

@@ -234,4 +234,8 @@ public class PatientService implements IPatientService {
 		this.normalDiagnoseDao = normalDiagnoseDao;
 	}
 
+	public int deleteDiagnose(String id) {
+		return patientDao.deleteDiagInfo(id);
+	}
+
 }

@@ -29,4 +29,5 @@ public interface IPatientDao {
 	public int deletePatientExamInfo(String patientId, String visitId);
 	public int deletePatientDiagInfo(String patientId, String visitId);
 	public int deletePatientDrugInfo(String patientId, String visitId);
+	public int deleteDiagInfo(String id);
 }
