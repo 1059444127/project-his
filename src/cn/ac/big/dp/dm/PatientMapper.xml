@@ -7,7 +7,7 @@
 		from tb_patientinfo
 	</select>
 	<select id="selectAllPatient" resultMap="PatientResultMap" parameterType="hashMap">
-		select id, patient_id, name, sex, date_of_birth, create_date, operator_name, phone_number_home, charge_type
+		select id, patient_id, name, sex, date_of_birth, create_date, operator_name, phone_number_home, charge_type, add_flag
 		from tb_patientinfo
 		<if test="patient!=null">
 			<trim prefix="where" prefixOverrides="and">
@@ -26,6 +26,7 @@
 						and patient_id=#{patient.patientId}
 					</if>
 				</if>
+				and add_flag=#{patient.addFlag}
 			</trim>
 		</if>
 		limit #{fromIndex},#{pageSize}
@@ -327,7 +328,8 @@
 					</when>
 					<when test="condition.operator == 'string_lk'">
 						and diagnosis_value like
-						'%#{condition.value1}%' </when>
+						'%#{condition.value1}%' 
+					</when>
 					<when test="condition.operator == 'count_1'">
 						and diagnosis_value =
 						#{condition.value1}+0
@@ -365,6 +367,7 @@
 						</if>
 					</when>
 				</choose>
+				and flag = 1
 			</if>
 		</trim>
 	</select>
@@ -427,6 +430,7 @@
 		<result column="vip_indicator" property="vipIndicator"/>
 		<result column="create_date" property="createDate"/>
 		<result column="birth_place" property="birthPlace"/>
+		<result column="add_flag" property="addFlag"/>
 		<collection property="visitList" ofType="Visit" resultMap="VisitMap"/>
 	</resultMap>
 	<resultMap type="Visit" id="VisitMap">

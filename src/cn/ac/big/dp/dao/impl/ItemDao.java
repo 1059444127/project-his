@@ -37,16 +37,20 @@ public class ItemDao implements IItemDao{
 		return labItemList;
 	}
 	public String[] selectReferenceValue(String itemName) {
-		@SuppressWarnings("unchecked")
-		Map<Object,Object> result = (Map<Object, Object>) getSqlSessionTemplate().selectList("selectReferenceValue", itemName).get(0);
-		Object low = result.get("low");
-		Object high = result.get("high");
-		if(low!=null&&high!=null) {
-			String lowStr = low.toString();
-			String highStr = high.toString();
-			if(!"0".equals(lowStr)&&!"0".equals(highStr)){
-				return new String[]{lowStr, highStr};
+		try {
+			@SuppressWarnings("unchecked")
+			Map<Object,Object> result = (Map<Object, Object>) getSqlSessionTemplate().selectList("selectReferenceValue", itemName).get(0);
+			Object low = result.get("low");
+			Object high = result.get("high");
+			if(low!=null&&high!=null) {
+				String lowStr = low.toString();
+				String highStr = high.toString();
+				if(!"0".equals(lowStr)&&!"0".equals(highStr)){
+					return new String[]{lowStr, highStr};
+				}
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return null;
 	}

@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.ac.big.dp.bean.DResult;
 import cn.ac.big.dp.bean.DiagCountDTO;
 import cn.ac.big.dp.bean.DiagItemDTO;
 import cn.ac.big.dp.bean.Diagnose;
@@ -147,6 +148,10 @@ public class DiagnoseService implements IDiagnoseService {
 
 	public Object selectPropertyByParam(String propName, Object propValue, String needField) {
 		return this.diagnoseDao.selectPropertyByParam(propName, propValue, needField);
+	}
+
+	public int updateDiagnose(DResult diagnose) {
+		return this.diagnoseDao.updateDiagnose(diagnose);
 	}
 	
 

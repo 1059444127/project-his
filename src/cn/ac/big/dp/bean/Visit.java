@@ -16,6 +16,7 @@ public class Visit {
 	private String admissionCause;
 	private String consultingDoctor;
 	private String attendingDoctor;
+	private Integer addFlag;
 	
 	public String getDeptDischargeFrom() {
 		return deptDischargeFrom;
@@ -76,6 +77,12 @@ public class Visit {
 	}
 	public void setPatientName(String patientName) {
 		this.patientName = patientName;
+	}
+	public Integer getAddFlag() {
+		return addFlag;
+	}
+	public void setAddFlag(Integer addFlag) {
+		this.addFlag = addFlag;
 	}
 	@Override
 	public String toString() {

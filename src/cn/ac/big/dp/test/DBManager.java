@@ -18,7 +18,7 @@ public class DBManager {
 		Connection conn = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/301db?useUnicode=true&characterEncoding=UTF-8","root","");
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/301dbend?useUnicode=true&characterEncoding=UTF-8","root","");
 			connPools.push(conn);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();

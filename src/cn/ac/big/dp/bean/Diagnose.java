@@ -3,23 +3,45 @@ package cn.ac.big.dp.bean;
 public class Diagnose {
 	
 	private String id;
-	private String patientName;
-	private String sex;
-	private String age;
-	private String operResult;
-	private String operConclusion;
-	private String operDate;
 	private String patientId;
 	private String visitId;
-	private String smoke;
-	private String alcohol;
-	private String curIllness;
-	private String hisIllness;
-	private String perHis;
-	private String familyHis;
-	private String specialItem;
-	private String leaveDia;
-	private String leaveTips;
+	private String zzgbbxz;
+	private String zzgxzcd;
+	private String qjzxzcd;
+	private String hxzbbxz;
+	private String hxzxzcd;
+	private String ygbbxz;
+	private String ygzxzcd;
+	private String jl;
+	private String bbzs;
+	private String ssjg;
+	private String ssrq;
+	private String name;
+	private String sex;
+	private String age;
+	private String jws;
+	private String gxyb;
+	private String gxb;
+	private String tnb;
+	private String nxgb;
+	private String grs;
+	private String xys;
+	private String xyn;
+	private String jy;
+	private String yjs;
+	private String yjn;
+	private String jj;
+	private String jzs;
+	private String jzycb;
+	private String tgjc;
+	private String sg;
+	private String tz;
+	private String jwsyn;
+	private String grsyn;
+	private String jzsyn;
+	private String bmi;
+	private String cyzd;
+	private String cyyz;
 	public String getId() {
 		return id;
 	}
@@ -38,65 +60,77 @@ public class Diagnose {
 	public void setVisitId(String visitId) {
 		this.visitId = visitId;
 	}
-	public String getSmoke() {
-		return smoke;
+	public String getZzgbbxz() {
+		return zzgbbxz;
 	}
-	public void setSmoke(String smoke) {
-		this.smoke = smoke;
+	public void setZzgbbxz(String zzgbbxz) {
+		this.zzgbbxz = zzgbbxz;
 	}
-	public String getAlcohol() {
-		return alcohol;
+	public String getZzgxzcd() {
+		return zzgxzcd;
 	}
-	public void setAlcohol(String alcohol) {
-		this.alcohol = alcohol;
+	public void setZzgxzcd(String zzgxzcd) {
+		this.zzgxzcd = zzgxzcd;
 	}
-	public String getCurIllness() {
-		return curIllness;
+	public String getQjzxzcd() {
+		return qjzxzcd;
 	}
-	public void setCurIllness(String curIllness) {
-		this.curIllness = curIllness;
+	public void setQjzxzcd(String qjzxzcd) {
+		this.qjzxzcd = qjzxzcd;
 	}
-	public String getHisIllness() {
-		return hisIllness;
+	public String getHxzbbxz() {
+		return hxzbbxz;
 	}
-	public void setHisIllness(String hisIllness) {
-		this.hisIllness = hisIllness;
+	public void setHxzbbxz(String hxzbbxz) {
+		this.hxzbbxz = hxzbbxz;
 	}
-	public String getPerHis() {
-		return perHis;
+	public String getHxzxzcd() {
+		return hxzxzcd;
 	}
-	public void setPerHis(String perHis) {
-		this.perHis = perHis;
+	public void setHxzxzcd(String hxzxzcd) {
+		this.hxzxzcd = hxzxzcd;
 	}
-	public String getFamilyHis() {
-		return familyHis;
+	public String getYgbbxz() {
+		return ygbbxz;
 	}
-	public void setFamilyHis(String familyHis) {
-		this.familyHis = familyHis;
+	public void setYgbbxz(String ygbbxz) {
+		this.ygbbxz = ygbbxz;
 	}
-	public String getSpecialItem() {
-		return specialItem;
+	public String getYgzxzcd() {
+		return ygzxzcd;
 	}
-	public void setSpecialItem(String specialItem) {
-		this.specialItem = specialItem;
+	public void setYgzxzcd(String ygzxzcd) {
+		this.ygzxzcd = ygzxzcd;
 	}
-	public String getLeaveDia() {
-		return leaveDia;
+	public String getJl() {
+		return jl;
 	}
-	public void setLeaveDia(String leaveDia) {
-		this.leaveDia = leaveDia;
+	public void setJl(String jl) {
+		this.jl = jl;
 	}
-	public String getLeaveTips() {
-		return leaveTips;
+	public String getBbzs() {
+		return bbzs;
 	}
-	public void setLeaveTips(String leaveTips) {
-		this.leaveTips = leaveTips;
+	public void setBbzs(String bbzs) {
+		this.bbzs = bbzs;
 	}
-	public String getPatientName() {
-		return patientName;
+	public String getSsjg() {
+		return ssjg;
 	}
-	public void setPatientName(String patientName) {
-		this.patientName = patientName;
+	public void setSsjg(String ssjg) {
+		this.ssjg = ssjg;
+	}
+	public String getSsrq() {
+		return ssrq;
+	}
+	public void setSsrq(String ssrq) {
+		this.ssrq = ssrq;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	public String getSex() {
 		return sex;
@@ -110,35 +144,143 @@ public class Diagnose {
 	public void setAge(String age) {
 		this.age = age;
 	}
-	public String getOperResult() {
-		return operResult;
+	public String getJws() {
+		return jws;
 	}
-	public void setOperResult(String operResult) {
-		this.operResult = operResult;
+	public void setJws(String jws) {
+		this.jws = jws;
 	}
-	public String getOperConclusion() {
-		return operConclusion;
+	public String getGxyb() {
+		return gxyb;
 	}
-	public void setOperConclusion(String operConclusion) {
-		this.operConclusion = operConclusion;
+	public void setGxyb(String gxyb) {
+		this.gxyb = gxyb;
 	}
-	public String getOperDate() {
-		return operDate;
+	public String getGxb() {
+		return gxb;
 	}
-	public void setOperDate(String operDate) {
-		this.operDate = operDate;
+	public void setGxb(String gxb) {
+		this.gxb = gxb;
 	}
-	@Override
-	public String toString() {
-		return "Diagnose [id=" + id + ", patientName=" + patientName + ", sex="
-				+ sex + ", age=" + age + ", operResult=" + operResult
-				+ ", operConclusion=" + operConclusion + ", operDate="
-				+ operDate + ", patientId=" + patientId + ", visitId="
-				+ visitId + ", smoke=" + smoke + ", alcohol=" + alcohol
-				+ ", curIllness=" + curIllness + ", hisIllness=" + hisIllness
-				+ ", perHis=" + perHis + ", familyHis=" + familyHis
-				+ ", specialItem=" + specialItem + ", leaveDia=" + leaveDia
-				+ ", leaveTips=" + leaveTips + "]";
+	public String getTnb() {
+		return tnb;
+	}
+	public void setTnb(String tnb) {
+		this.tnb = tnb;
+	}
+	public String getNxgb() {
+		return nxgb;
+	}
+	public void setNxgb(String nxgb) {
+		this.nxgb = nxgb;
+	}
+	public String getGrs() {
+		return grs;
+	}
+	public void setGrs(String grs) {
+		this.grs = grs;
+	}
+	public String getXys() {
+		return xys;
+	}
+	public void setXys(String xys) {
+		this.xys = xys;
+	}
+	public String getXyn() {
+		return xyn;
+	}
+	public void setXyn(String xyn) {
+		this.xyn = xyn;
+	}
+	public String getJy() {
+		return jy;
+	}
+	public void setJy(String jy) {
+		this.jy = jy;
+	}
+	public String getYjs() {
+		return yjs;
+	}
+	public void setYjs(String yjs) {
+		this.yjs = yjs;
+	}
+	public String getYjn() {
+		return yjn;
+	}
+	public void setYjn(String yjn) {
+		this.yjn = yjn;
+	}
+	public String getJj() {
+		return jj;
+	}
+	public void setJj(String jj) {
+		this.jj = jj;
+	}
+	public String getJzs() {
+		return jzs;
+	}
+	public void setJzs(String jzs) {
+		this.jzs = jzs;
+	}
+	public String getJzycb() {
+		return jzycb;
+	}
+	public void setJzycb(String jzycb) {
+		this.jzycb = jzycb;
+	}
+	public String getTgjc() {
+		return tgjc;
+	}
+	public void setTgjc(String tgjc) {
+		this.tgjc = tgjc;
+	}
+	public String getSg() {
+		return sg;
+	}
+	public void setSg(String sg) {
+		this.sg = sg;
+	}
+	public String getTz() {
+		return tz;
+	}
+	public void setTz(String tz) {
+		this.tz = tz;
+	}
+	public String getJwsyn() {
+		return jwsyn;
+	}
+	public void setJwsyn(String jwsyn) {
+		this.jwsyn = jwsyn;
+	}
+	public String getGrsyn() {
+		return grsyn;
+	}
+	public void setGrsyn(String grsyn) {
+		this.grsyn = grsyn;
+	}
+	public String getJzsyn() {
+		return jzsyn;
+	}
+	public void setJzsyn(String jzsyn) {
+		this.jzsyn = jzsyn;
+	}
+	public String getBmi() {
+		return bmi;
+	}
+	public void setBmi(String bmi) {
+		this.bmi = bmi;
+	}
+	public String getCyzd() {
+		return cyzd;
+	}
+	public void setCyzd(String cyzd) {
+		this.cyzd = cyzd;
+	}
+	public String getCyyz() {
+		return cyyz;
+	}
+	public void setCyyz(String cyyz) {
+		this.cyyz = cyyz;
 	}
 	
 }	

@@ -3,6 +3,7 @@ package cn.ac.big.dp.service;
 import java.util.List;
 import java.util.Map;
 
+import cn.ac.big.dp.bean.DResult;
 import cn.ac.big.dp.bean.DiagCountDTO;
 import cn.ac.big.dp.bean.DiagItemDTO;
 import cn.ac.big.dp.bean.Diagnose;
@@ -21,4 +22,5 @@ public interface IDiagnoseService {
 	public List<String> selectPatientDiagByPVId(String patientId, String visitId);
 	public List<DiagCountDTO> selectDiagCountByCondition(String subject, String category);
 	public Object selectPropertyByParam(String propName, Object propValue, String needField);
+	public int updateDiagnose(DResult diagnose);
 }

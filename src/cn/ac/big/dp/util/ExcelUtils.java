@@ -245,7 +245,7 @@ public class ExcelUtils{
 		return value;
 	}
 	
-	public static Map<String, Object> readProperties(FileInputStream fis) throws InvalidFormatException, IOException, IllegalAccessException, InvocationTargetException, InstantiationException {
+	public static Map<String, Object> readProperties(FileInputStream fis) throws Exception {
 		Map<String,Object> resultMap = new HashMap<String,Object>();
 		Workbook wb = WorkbookFactory.create(fis);
 		Sheet sheet = wb.getSheetAt(0);

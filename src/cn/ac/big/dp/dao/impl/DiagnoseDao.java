@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import cn.ac.big.dp.bean.DResult;
 import cn.ac.big.dp.bean.DiagCountDTO;
 import cn.ac.big.dp.bean.DiagItemDTO;
 import cn.ac.big.dp.bean.Diagnose;
@@ -88,6 +89,9 @@ public class DiagnoseDao implements IDiagnoseDao {
 		params.put("needField", needField);
 		params.put("propValue", propValue);
 		return this.sessionTemplate.selectOne("selectPropertyByParam", params);
+	}
+	public int updateDiagnose(DResult diagnose) {
+		return this.sessionTemplate.update("updateDiagByParam", diagnose);
 	}
 
 }

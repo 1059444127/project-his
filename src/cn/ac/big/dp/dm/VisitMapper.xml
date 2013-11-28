@@ -13,7 +13,8 @@
 			   t2.patient_class,
 			   t2.admission_cause,
 			   t2.consulting_doctor,
-			   t2.attending_doctor
+			   t2.attending_doctor,
+			   t2.add_flag
 		from tb_patientinfo as t1 LEFT JOIN tb_patvisit as t2 
 		on t1.patient_id = t2.patient_id
 			<if test="visit!=null">
@@ -80,6 +81,7 @@
 		<id column="vid" property="id" />
 		<result column="visit_id" property="visitId" />
 		<result column="patient_id" property="patientId"/>
+		<result column="add_flag" property="addFlag"/>
 		<result column="name" property="patientName"/>
 		<result column="admission_date_time" property="admissionDateTime"/>
 		<result column="dept_admission_to" property="admissionTo"/>

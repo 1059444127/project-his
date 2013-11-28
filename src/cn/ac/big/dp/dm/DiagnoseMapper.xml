@@ -8,6 +8,15 @@
 		limit 0,1
 	</select>
 	
+	<update id="updateDiagByParam" parameterType="DResult">
+		update tb_diagnosisinfo set diagnosis_desc = #{diagnosis_desc}, 
+									diagnosis_date = #{diagnosis_date}, 
+									treat_days = #{treat_days},
+									treat_result = #{treat_result}, 
+									subject = #{subject}
+		where id = #{id}
+	</update>
+	
 	<select id="selectDiagCountByCondition" parameterType="HashMap" resultType="DiagCountDTO">
 		select subject, ${condition} as name, count(*) as count from tb_diagitem
 		group by subject, ${condition}
@@ -140,7 +149,7 @@
 		limit #{fromIndex},#{pageSize}
 	</select>
 	<select id="selectDiagnoseByParams" resultMap="DiagnoseResultMap" parameterType="hashMap">
-		select * from v_pat_diagnose_info
+		select * from v_pat_diagnose
 		<trim prefix="where" prefixOverrides="and|or">
 			<foreach collection="list" item="param">
 				and ${param.paramName} = #{param.paramValue}
@@ -189,20 +198,45 @@
 		<id column="id" property="id"/>
 		<result column="patient_id" property="patientId"/>
 		<result column="visit_id" property="visitId"/>
-		<result column="xy" property="smoke"/>
-		<result column="yj" property="alcohol"/>
-		<result column="xbs" property="curIllness"/>
-		<result column="jws" property="hisIllness"/>
-		<result column="grs" property="perHis"/>
-		<result column="jzs" property="familyHis"/>
-		<result column="hyjtsjc" property="specialItem"/>
-		<result column="cyzd" property="leaveDia"/>
-		<result column="name" property="patientName"/>
+
+		<result column="zzgbbxz" property="zzgbbxz"/>
+		<result column="zzgxzcd" property="zzgxzcd"/>
+		<result column="qjzxzcd" property="qjzxzcd"/>
+		<result column="hxzbbxz" property="hxzbbxz"/>
+		<result column="hxzxzcd" property="hxzxzcd"/>
+		<result column="ygbbxz" property="ygbbxz"/>
+		<result column="ygzxzcd" property="ygzxzcd"/>
+		<result column="jl" property="jl"/>
+		<result column="bbzs" property="bbzs"/>
+		<result column="ssjg" property="ssjg"/>
+		<result column="ssrq" property="ssrq"/>
+		
+		<result column="name" property="name"/>
 		<result column="sex" property="sex"/>
 		<result column="age" property="age"/>
-		<result column="ssjg" property="operResult"/>
-		<result column="jl" property="operConclusion"/>
-		<result column="ssdate" property="operDate"/>
+		<result column="jws" property="jws"/>
+		<result column="gxyb" property="gxyb"/>
+		<result column="gxb" property="gxb"/>
+		<result column="tnb" property="tnb"/>
+		<result column="nxgb" property="nxgb"/>
+		<result column="grs" property="grs"/>
+		<result column="xys" property="xys"/>
+		<result column="xyn" property="xyn"/>
+		<result column="jy" property="jy"/>
+		<result column="yjs" property="yjs"/>
+		<result column="yjn" property="yjn"/>
+		<result column="jj" property="jj"/>
+		<result column="jzs" property="jzs"/>
+		<result column="jzycb" property="jzycb"/>
+		<result column="tgjc" property="tgjc"/>
+		<result column="sg" property="sg"/>
+		<result column="tz" property="tz"/>
+		<result column="jwsyn" property="jwsyn"/>
+		<result column="grsyn" property="grsyn"/>
+		<result column="jzsyn" property="jzsyn"/>
+		<result column="bmi" property="bmi"/>
+		<result column="cyzd" property="cyzd"/>
+		<result column="cyyz" property="cyyz"/>
 	</resultMap>
 	
 </mapper>

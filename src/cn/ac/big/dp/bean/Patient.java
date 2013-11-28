@@ -32,6 +32,7 @@ public class Patient {
 	private List<Visit> visitList;
 	private String vipIndicator;
 	private String createDate;
+	private Integer addFlag;
 	
 	@Override
 	public String toString() {
@@ -213,5 +214,11 @@ public class Patient {
 	}
 	public void setOperatorName(String operatorName) {
 		this.operatorName = operatorName;
+	}
+	public Integer getAddFlag() {
+		return addFlag;
+	}
+	public void setAddFlag(Integer addFlag) {
+		this.addFlag = addFlag;
 	}
 }

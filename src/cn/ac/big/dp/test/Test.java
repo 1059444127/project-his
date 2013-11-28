@@ -33,7 +33,7 @@ public class Test
 			System.out.println(m.group(1));
 		}
 	}
-	public static void test02() throws InvalidFormatException, IllegalAccessException, InvocationTargetException, InstantiationException, IOException {
+	public static void test02() throws Exception {
 		FileInputStream fis = new FileInputStream("D:/template.xls");
 		ExcelUtils.readProperties(fis);
 	}
