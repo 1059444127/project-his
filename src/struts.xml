@@ -50,8 +50,7 @@
 		<action name="item_*" class="itemAction" method="{1}">
 			<result type="json" />
 		</action>
-		<action name="chart_findDiagItemPager" class="chartAction"
-			method="findDiagItemPager">
+		<action name="chart_findDiagItemPager" class="chartAction" method="findDiagItemPager">
 			<result type="json" />
 		</action>
 		<action name="chart_*" class="chartAction" method="{1}">
