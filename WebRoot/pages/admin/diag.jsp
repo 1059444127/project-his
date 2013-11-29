@@ -160,6 +160,7 @@ html,body,div,table {
 						<th>诊断时间</th>
 						<th>吸烟史</th>
 						<th>饮酒史</th>
+						<th>操作</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -179,9 +180,9 @@ html,body,div,table {
 							<td><img src="resources/imgs/delete.png"
 								style="cursor:pointer;margin:0px;padding:0px;width:15px;height:15px"
 								onclick="deleteConfirm('<s:property value="#diagItem.id" />','<s:property value="#diagItem.patient_id" />','<s:property value="#diagItem.name" />')" />
-								<img src="resources/imgs/delete.png"
+								<img src="resources/imgs/Edit.png"
 								style="cursor:pointer;margin:0px;padding:0px;width:15px;height:15px"
-								onclick="doModifiy('<s:property value="#diagItem.id" />',,'<s:property value="#diagItem.patient_id" />','<s:property value="#diagItem.name" />','<s:property value="#diagItem.diagnosis_desc" />',<s:property value="#diagItem.diagnosis_type" />,'<s:property value="#diagItem.diagnosis_value" />','<s:property value="#diagItem.diagnosis_date" />','<s:property value="#diagItem.diagnosis_subject" />')" />
+								onclick="doModifiy('<s:property value="#diagItem.id" />','<s:property value="#diagItem.patient_id" />','<s:property value="#diagItem.visit_id" />','<s:property value="#diagItem.name" />','<s:property value="#diagItem.diagnosis_desc" />','<s:property value="#diagItem.diagnosis_type" />','<s:property value="#diagItem.diagnosis_value" />','<s:property value="#diagItem.diagnosis_date" />','<s:property value="#diagItem.diagnosis_subject" />')" />
 							</td>
 						</tr>
 					</s:iterator>
@@ -198,10 +199,38 @@ html,body,div,table {
 			</div>
 			<div class="modal-body">
 				<div style="width:100%">
+				<form id="fastUpdateForm" action="search/patient_updateDiag.action" method="post">
+					<input type="hidden" id="di" name="diagnose.id"/>
 					<table id="diagResultTable" class="table table-bordered"
 						style="width:100%;padding-bottom: 0;padding:0px;">
-						<tbody></tbody>
+						<tbody>
+							<tr style="font-size:15px;height:15px;line-height:15px;padding:4px;text-align:center;font-weight:bold;background-color:#DEEDFE">
+								<th>病人名称</th>
+								<th>病人ID</th>
+								<th>病次ID</th>
+								<th>诊断时间</th>
+							</tr>
+							<tr>
+								<td id="pn"></td>
+								<td id="pi"></td>
+								<td id="vi"></td>
+								<td id="dt"></td>
+							</tr>
+							<tr style="font-size:15px;height:15px;line-height:15px;padding:4px;text-align:center;font-weight:bold;background-color:#DEEDFE">
+								<th>诊断结果</th>
+								<th>诊断详细</th>
+								<th>诊断描述</th>
+								<th>诊断类型</th>
+							</tr>
+							<tr>
+								<td id='dd'></td>
+								<td id="dv"><input name="diagnose.diagnosis_value" type="text"/></td>
+								<td id="ds"></td>
+								<td id="dy"></td>
+							</tr>
+						</tbody>
 					</table>
+				</form>
 				</div>
 			</div>
 			<div class="modal-footer">
@@ -385,7 +414,19 @@ html,body,div,table {
 			$("#fastDeleteForm").submit();
 		}
 		function doModifiy(id, patientId, visitId, patientName, desc, type, value, date, subject) {
-			alert("fds");
+			$("#di").val(id);
+			$("#pi").html(patientId);
+			$("#vi").html(visitId);
+			$("#pn").html(patientName);
+			$("#dd").html(desc);
+			$("#dy").html(type);
+			$("#dv input").val(value);
+			$("#dt").html(date);
+			$("#ds").html(subject);
+			$("#DiagResultInfo").modal("show");
+		}
+		function update() {
+			$("#fastUpdateForm").submit();
 		}
 	</script>
 </body>

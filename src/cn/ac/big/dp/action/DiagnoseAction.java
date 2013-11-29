@@ -2,8 +2,8 @@ package cn.ac.big.dp.action;
 
 import java.util.List;
 
+
 import cn.ac.big.dp.bean.DResult;
-import cn.ac.big.dp.bean.DiagnoseResult;
 import cn.ac.big.dp.service.IDiagnoseService;
 
 import com.opensymphony.xwork2.ActionSupport;

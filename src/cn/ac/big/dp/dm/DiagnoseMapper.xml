@@ -13,11 +13,7 @@
 	</delete>
 	
 	<update id="updateDiagByParam" parameterType="DResult">
-		update tb_diagnosisinfo set diagnosis_desc = #{diagnosis_desc}, 
-									diagnosis_date = #{diagnosis_date}, 
-									treat_days = #{treat_days},
-									treat_result = #{treat_result}, 
-									subject = #{subject}
+		update tb_diagnosisinfo set diagnosis_value = #{diagnosis_value}
 		where id = #{id}
 	</update>
 	
